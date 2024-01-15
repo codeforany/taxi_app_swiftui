@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "cancel_trip.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "sm_my_vehicle.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
