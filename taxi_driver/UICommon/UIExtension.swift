@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-enum Roboto: String {
-    case regular = "Roboto-Book"
-    case medium = "Roboto-Medium"
-    case bold = "Roboto-Bold"
+enum NunitoSans: String {
+    case regular = "NunitoSans10pt-Regular"
+    case medium = "NunitoSans10pt-Medium"
+    case semiBold = "NunitoSans10pt-SemiBold"
+    case bold = "NunitoSans10pt-Bold"
+    case extraBold = "NunitoSans10pt-ExtraBold"
 }
 
 extension Font {
-    static func customfont(_ font: Roboto, fontSize: CGFloat) -> Font {
+    static func customfont(_ font: NunitoSans, fontSize: CGFloat) -> Font {
         custom(font.rawValue, size: fontSize)
     }
 }
@@ -70,52 +72,43 @@ extension CGFloat {
 extension Color {
     
     static var primaryApp: Color {
-        return Color(hex: "2676E1")
+        return Color(hex: "3DB24B")
     }
-    
-    static var primaryEnd: Color {
-        return Color(hex: "00B5AA")
-    }
-    
+
     static var secondaryApp: Color {
-        return Color(hex: "A3FEC7")
+        return Color(hex: "3369FF")
     }
     
-    static var secondaryEnd: Color {
-        return Color(hex: "6AC6FC")
+    static var redApp: Color {
+        return Color(hex: "F4586C")
     }
     
-       
     static var primaryText: Color {
-        return Color(hex: "434B56")
+        return Color(hex: "282F39")
     }
+    
     static var primaryTextW: Color {
         return Color.white
     }
     
-      
     static var secondaryText: Color {
-        return Color(hex: "7C8085")
+        return Color(hex: "7F7F7F")
     }
     
-    static var primaryG: [Color] {
-        return [primaryApp, primaryEnd]
+    static var placeholder: Color {
+        return Color(hex: "BBBBBB")
     }
     
-    static var secondaryG: [Color] {
-        return [secondaryApp, secondaryEnd]
+    static var lightGray: Color {
+        return Color(hex: "DADEE3")
     }
     
- 
+    static var lightWhite: Color {
+        return Color(hex: "EFEFEF")
+    }
+    
     static var bg: Color {
         return Color.white
-    }
-    
-    static var time: Color {
-        return Color(hex: "787C81")
-    }
-    static var base: Color {
-        return Color(hex: "00B5AA")
     }
     
     init(hex: String) {
@@ -187,5 +180,23 @@ struct RoundedCorner: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corner, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+struct ShowButton: ViewModifier {
+    @Binding var isShow: Bool
+    
+    public func body(content: Content) -> some View {
+        
+        HStack {
+            content
+            Button {
+                isShow.toggle()
+            } label: {
+                Image(systemName: !isShow ? "eye.fill" : "eye.slash.fill" )
+                    .foregroundColor(.placeholder)
+            }
+
+        }
     }
 }

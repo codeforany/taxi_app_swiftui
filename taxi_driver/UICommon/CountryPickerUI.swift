@@ -6,15 +6,36 @@
 //
 
 import SwiftUI
+import CountryPicker
 
-struct CountryPickerUI: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct CountryPickerUI: UIViewControllerRepresentable {
+    typealias UIViewControllerType = CountryPickerViewController
+
+    let countryPicker = CountryPickerViewController()
+
+    @Binding var country: Country?
+
+    func makeUIViewController(context: Context) -> CountryPickerViewController {
+        countryPicker.selectedCountry = "TR"
+        countryPicker.delegate = context.coordinator
+        return countryPicker
     }
-}
 
-struct CountryPickerUI_Previews: PreviewProvider {
-    static var previews: some View {
-        CountryPickerUI()
+    func updateUIViewController(_ uiViewController: CountryPickerViewController, context: Context) {
+        //
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    class Coordinator: NSObject, CountryPickerDelegate {
+        var parent: CountryPickerUI
+        init(_ parent: CountryPickerUI) {
+            self.parent = parent
+        }
+        func countryPicker(didSelect country: Country) {
+            parent.country = country
+        }
     }
 }

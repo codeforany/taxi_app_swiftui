@@ -8,11 +8,105 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.presentationMode) var mode:Binding<PresentationMode>
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            VStack{
+                ZStack{
+                    Text("Settings")
+                        .font(.customfont(.extraBold, fontSize: 25))
+                    
+                    HStack {
+                        Button {
+                            mode.wrappedValue.dismiss()
+                        } label: {
+                            Image("close")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                        }
+                        .foregroundColor(.white)
+                        Spacer()
+                   }
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, .topInsets)
+                
+                Rectangle()
+                    .fill(Color.lightWhite)
+                    .frame(height: 8)
+                
+                ScrollView{
+                    LazyVStack(spacing: 20){
+                        
+                        NavigationLink {
+                            DriverEditProfileView()
+                        } label: {
+                            SettingRow(icon: "sm_profile", title: "My Profile")
+                        }
+
+                        
+                        NavigationLink {
+                            MyVehicleView()
+                        } label: {
+                            SettingRow(icon: "sm_my_vehicle", title: "My Vehicle")
+                        }
+
+                        
+                        SettingRow(icon: "sm_document", title: "Personal Document")
+                        
+                        NavigationLink {
+                            BankDetailsView()
+                        } label: {
+                            SettingRow(icon: "sm_bank", title: "Bank details")
+                        }
+
+                        
+                        
+                        SettingRow(icon: "sm_password", title: "Change Password")
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    
+                    VStack(spacing: 0) {
+                        Rectangle()
+                            .fill(Color.lightWhite)
+                            .frame(height: 20)
+                        Text("HELP")
+                            .font(.customfont(.extraBold, fontSize: 15))
+                            .foregroundColor(Color.primaryText)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 8)
+                            .background(Color.lightWhite)
+                    }
+                       
+                    VStack(spacing: 20){
+                        SettingRow(icon: "sm_document", title: "Terms & Conditions")
+                        SettingRow(icon: "sm_document", title: "Privacy policies")
+                        SettingRow(icon: "sm_document", title: "About")
+                        SettingRow(icon: "sm_profile", title: "Contact us")
+                    }
+                    .padding(.horizontal, 20)
+                    
+                }
+            }
+            
+            
+        }
+        .navigationTitle("")
+        .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
+        .ignoresSafeArea()
     }
 }
 
 #Preview {
-    SettingsView()
+    
+    NavigationView {
+        SettingsView()
+    }
+    
 }

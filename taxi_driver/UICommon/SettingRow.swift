@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct SettingRow: View {
+    var icon: String = "acceptance"
+    var title: String = "Title"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+            Image(icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 25, height: 25, alignment: .center)
+            
+            Text(title)
+                .font(.customfont(.regular, fontSize: 16))
+                .foregroundColor(Color.primaryText)
+            
+           
+        }
+        .frame(maxWidth: .infinity,
+               alignment: .leading)
     }
 }
 

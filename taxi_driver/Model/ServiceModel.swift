@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-struct ServiceModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class ServiceModel : Identifiable, Equatable, ObservableObject {
+    
+    
+    
+    var id: Int = 0
+    var serviceName: String = ""
+    @Published var value: Bool = false
+    
+    init(sObj: NSDictionary, isTrue: Bool) {
+        id = sObj.value(forKey: "service_id") as? Int ?? 0
+        serviceName = sObj.value(forKey: "service_name") as? String ?? ""
+        value = isTrue
     }
-}
-
-#Preview {
-    ServiceModel()
+    
+    static func == (lhs: ServiceModel, rhs: ServiceModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

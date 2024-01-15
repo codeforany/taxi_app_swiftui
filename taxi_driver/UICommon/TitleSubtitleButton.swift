@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct TitleSubtitleButton: View {
+    var title: String = "Title"
+    var subtitle: String = "Subtitle"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+          
+            Text(title)
+                .font(.customfont(.extraBold, fontSize: 18))
+                .foregroundColor(Color.primaryText)
+            
+            Text(subtitle)
+                .font(.customfont(.regular, fontSize: 16))
+                .foregroundColor(Color.secondaryText)
+        }
+        .frame(maxWidth: .infinity,
+               alignment: .center)
     }
 }
 

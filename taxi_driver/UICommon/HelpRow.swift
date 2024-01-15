@@ -8,8 +8,26 @@
 import SwiftUI
 
 struct HelpRow: View {
+    @State var title: String = "title"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Text(title)
+                    .font(.customfont(.regular, fontSize: 16))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(.blue)
+                
+                Image("next")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+            }
+            
+            Divider()
+        }
+        
+        .padding(.vertical, 15)
     }
 }
 

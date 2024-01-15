@@ -8,13 +8,52 @@
 import SwiftUI
 
 struct OTPTextField: View {
+    
+    @Binding var txtOTP: String
+    @State var placeholder = "-"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            
+            
+            HStack{
+                
+                Spacer()
+                var otpCode = txtOTP.map{ String($0) }
+                
+                ForEach(0..<6) { index in
+                    VStack{
+                        
+                        if( index < otpCode.count ) {
+                            Text(otpCode[index])
+                                .font(.customfont(.bold, fontSize: 16))
+                                .padding(15)
+                        }else {
+                            Text(placeholder)
+                                .font(.customfont(.bold, fontSize: 16))
+                                .padding(15)
+                        }
+                        Divider()
+                    }
+                    .frame(width: 45, height: 50)
+                }
+                Spacer()
+                
+            }
+            
+            TextField("", text: $txtOTP)
+                .keyboardType(.numberPad)
+                .foregroundColor(.clear)
+                .accentColor(.clear)
+            
+        }
     }
 }
 
 struct OTPTextField_Previews: PreviewProvider {
+    
+    @State static var txtCode = ""
     static var previews: some View {
-        OTPTextField()
+        OTPTextField( txtOTP: $txtCode)
     }
 }
