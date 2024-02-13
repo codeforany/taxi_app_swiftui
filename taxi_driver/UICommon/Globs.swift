@@ -35,6 +35,11 @@ struct Globs {
     static let svDeleteCar = API_URL + "car_delete"
     static let svSetRunningCar = API_URL + "set_running_car"
     
+    static let svSupportUserList = API_URL + "support_user_list"
+    static let svSupportConnect = API_URL + "support_connect"
+    static let svSupportMessage = API_URL + "support_message"
+    static let svSupportMessageClear = API_URL + "support_clear"
+    
     
 }
 

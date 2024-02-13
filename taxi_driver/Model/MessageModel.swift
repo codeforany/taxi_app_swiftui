@@ -7,12 +7,23 @@
 
 import SwiftUI
 
-struct MessageModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    MessageModel()
+struct MessageModel: Identifiable, Equatable {
+        
+        var id: Int = 0
+        var senderId: Int = 0
+        var receiverId: Int = 0
+        var message: String = ""
+        var createdDate: Date = Date()
+        
+        init(mObj: NSDictionary) {
+            id = mObj.value(forKey: "chat_id") as? Int ?? 0
+            senderId = mObj.value(forKey: "sender_id") as? Int ?? 0
+            receiverId = mObj.value(forKey: "receiver_id") as? Int ?? 0
+            message = mObj.value(forKey: "message") as? String ?? ""
+            createdDate = (mObj.value(forKey: "created_date") as? String ?? "").date
+        }
+        
+        static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
+            return lhs.id == rhs.id
+        }
 }

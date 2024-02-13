@@ -200,3 +200,21 @@ struct ShowButton: ViewModifier {
         }
     }
 }
+
+extension String {
+    
+    var date: Date {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return df.date(from: self) ?? Date()
+    }
+}
+
+extension Date {
+    
+    var string: String {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm a"
+        return df.string(from: self)
+    }
+}

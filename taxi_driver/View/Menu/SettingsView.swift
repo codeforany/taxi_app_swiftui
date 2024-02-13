@@ -88,6 +88,10 @@ struct SettingsView: View {
                         SettingRow(icon: "sm_document", title: "Privacy policies")
                         SettingRow(icon: "sm_document", title: "About")
                         SettingRow(icon: "sm_profile", title: "Contact us")
+                        
+                        NavigationLink(destination: SupportUserView()) {
+                            SettingRow(icon: "sm_profile", title: "Support")
+                        }
                     }
                     .padding(.horizontal, 20)
                     
