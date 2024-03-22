@@ -18,7 +18,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         
         let _ = SocketViewModel.shared
-        
+        let _  = DBHelper.shared
+                
         return true
     }
     
@@ -77,7 +78,9 @@ struct taxi_driverApp: App {
                     HomeView()
                 }
             }
+            
             .navigationViewStyle(.stack)
         }
+        
     }
 }

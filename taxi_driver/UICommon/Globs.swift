@@ -40,6 +40,10 @@ struct Globs {
     static let svSupportMessage = API_URL + "support_message"
     static let svSupportMessageClear = API_URL + "support_clear"
     
+    static let svStaticData = API_URL + "static_data"
+    
+    
+    
     
 }
 

@@ -11,6 +11,8 @@
 		CB04A7652B3E772C00FDDEAE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04A7642B3E772C00FDDEAE /* ImagePicker.swift */; };
 		CB04BEC92ADF836C008AADA9 /* MyRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04BEC82ADF836C008AADA9 /* MyRatingView.swift */; };
 		CB04BECB2ADF83CD008AADA9 /* RatingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04BECA2ADF83CD008AADA9 /* RatingRow.swift */; };
+		CB0B03542B96ED0A00DAC455 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = CB0B03532B96ED0A00DAC455 /* SQLite */; };
+		CB0B03562B96ED6F00DAC455 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B03552B96ED6F00DAC455 /* DBHelper.swift */; };
 		CB13DEEC2AD11CED00D3D69C /* IconTitleSubtitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB13DEEB2AD11CED00D3D69C /* IconTitleSubtitleButton.swift */; };
 		CB1501E62AD9034F0002AE2B /* EarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1501E52AD9034F0002AE2B /* EarningView.swift */; };
 		CB231CF22B413B9F00A6196D /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB231CF12B413B9F00A6196D /* ServiceModel.swift */; };
@@ -119,6 +121,7 @@
 		CB04A7642B3E772C00FDDEAE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		CB04BEC82ADF836C008AADA9 /* MyRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRatingView.swift; sourceTree = "<group>"; };
 		CB04BECA2ADF83CD008AADA9 /* RatingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRow.swift; sourceTree = "<group>"; };
+		CB0B03552B96ED6F00DAC455 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
 		CB13DEEB2AD11CED00D3D69C /* IconTitleSubtitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleButton.swift; sourceTree = "<group>"; };
 		CB1501E52AD9034F0002AE2B /* EarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningView.swift; sourceTree = "<group>"; };
 		CB231CF12B413B9F00A6196D /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
@@ -220,6 +223,7 @@
 				CBD647BD2B3A0D0700867954 /* FirebaseCrashlytics in Frameworks */,
 				CBD647D32B3A0D0700867954 /* FirebaseInstallations in Frameworks */,
 				CBD647DB2B3A0D0700867954 /* FirebaseRemoteConfig in Frameworks */,
+				CB0B03542B96ED0A00DAC455 /* SQLite in Frameworks */,
 				CBD647DF2B3A0D0700867954 /* FirebaseStorage in Frameworks */,
 				CBD647BF2B3A0D0700867954 /* FirebaseDatabase in Frameworks */,
 				CBD647E12B3A0D0700867954 /* FirebaseStorageCombine-Community in Frameworks */,
@@ -385,6 +389,7 @@
 		CBF901CF2AB6D61200296488 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				CB0B03552B96ED6F00DAC455 /* DBHelper.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				CBD647E02B3A0D0700867954 /* FirebaseStorageCombine-Community */,
 				CBF200732B47BC0A000E245B /* SDWebImageSwiftUI */,
 				CB40BB132B539E5F008FBB1E /* SocketIO */,
+				CB0B03532B96ED0A00DAC455 /* SQLite */,
 			);
 			productName = taxi_driver;
 			productReference = CBF901B22AB6D57600296488 /* taxi_driver.app */;
@@ -513,6 +519,7 @@
 				CBD647AB2B3A0D0700867954 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CBF200722B47BC0A000E245B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				CB40BB122B539E5F008FBB1E /* XCRemoteSwiftPackageReference "socket" */,
+				CB0B03522B96ED0A00DAC455 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = CBF901B32AB6D57600296488 /* Products */;
 			projectDirPath = "";
@@ -577,6 +584,7 @@
 				CBFE45EC2AB81A6500751656 /* OTPView.swift in Sources */,
 				CBF3F4E32B559D0C00D7D5CE /* SupportMessageView.swift in Sources */,
 				CB4C20CA2AD29E600081B3FE /* MyMapView.swift in Sources */,
+				CB0B03562B96ED6F00DAC455 /* DBHelper.swift in Sources */,
 				CB5859B72ADC11D000540729 /* WalletRow.swift in Sources */,
 				CB04A7632B3E752900FDDEAE /* ProfileImageView.swift in Sources */,
 				CB4D82872ADCEB2900CE2AC1 /* SettingRow.swift in Sources */,
@@ -745,10 +753,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "taxi-driver-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to Update or Change your profile image";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow to Update or Change your profile image";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -780,10 +791,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "taxi-driver-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to Update or Change your profile image";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow to Update or Change your profile image";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -827,6 +841,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CB0B03522B96ED0A00DAC455 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.0;
+			};
+		};
 		CB40BB122B539E5F008FBB1E /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
@@ -862,6 +884,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CB0B03532B96ED0A00DAC455 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB0B03522B96ED0A00DAC455 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
 		CB40BB132B539E5F008FBB1E /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB40BB122B539E5F008FBB1E /* XCRemoteSwiftPackageReference "socket" */;

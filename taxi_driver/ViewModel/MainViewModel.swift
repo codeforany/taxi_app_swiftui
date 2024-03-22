@@ -21,6 +21,7 @@ class MainViewModel: ObservableObject  {
     init() {
         
         reloadData()
+        statiDataApi()
         
     }
     
@@ -41,6 +42,34 @@ class MainViewModel: ObservableObject  {
             }
         }
     }
+    
+    func statiDataApi() {
+        
+        ServiceCall.post(parameter: ["last_call_time": ""], path: Globs.svStaticData, isTokenApi: false) { responseObj in
+            
+            if let responseObj = responseObj {
+                if  responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    
+                    var payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                    
+                    DBHelper.shared.addZone(arr: payloadObj.value(forKey: "zone_list") as? [NSDictionary] ?? [] )
+                    DBHelper.shared.addService(arr: payloadObj.value(forKey: "service_detail") as? [NSDictionary] ?? [] )
+                    DBHelper.shared.addPrice(arr: payloadObj.value(forKey: "price_detail") as? [NSDictionary] ?? [] )
+                    DBHelper.shared.addDocument(arr: payloadObj.value(forKey: "document") as? [NSDictionary] ?? [] )
+                    DBHelper.shared.addZoneDocument(arr: payloadObj.value(forKey: "zone_document") as? [NSDictionary] ?? [] )
+                    
+                    
+                    print("Static Data Save Done -----")
+                }
+            }
+            
+        
+        } failure: { error in
+            print("Static Data Api Calling Error: \( error?.localizedDescription ?? "Error" )")
+        }
+    }
+    
+    
     
 }
 
