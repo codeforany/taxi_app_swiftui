@@ -28,6 +28,8 @@
 		CB49C9D42B5630A8008568A7 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */; };
 		CB4C20C82AD29A5D0081B3FE /* TipRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C20C72AD29A5D0081B3FE /* TipRequestView.swift */; };
 		CB4C20CA2AD29E600081B3FE /* MyMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4C20C92AD29E600081B3FE /* MyMapView.swift */; };
+		CB4CE6FE2BB9580700A42220 /* UserHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE6FD2BB9580700A42220 /* UserHomeViewModel.swift */; };
+		CB4CE7002BB960F000A42220 /* LocationBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE6FF2BB960F000A42220 /* LocationBooking.swift */; };
 		CB4D82832ADCEB0100CE2AC1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D82822ADCEB0100CE2AC1 /* SettingsView.swift */; };
 		CB4D82852ADCEB1600CE2AC1 /* MyVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D82842ADCEB1600CE2AC1 /* MyVehicleView.swift */; };
 		CB4D82872ADCEB2900CE2AC1 /* SettingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4D82862ADCEB2900CE2AC1 /* SettingRow.swift */; };
@@ -136,6 +138,8 @@
 		CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
 		CB4C20C72AD29A5D0081B3FE /* TipRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipRequestView.swift; sourceTree = "<group>"; };
 		CB4C20C92AD29E600081B3FE /* MyMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMapView.swift; sourceTree = "<group>"; };
+		CB4CE6FD2BB9580700A42220 /* UserHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewModel.swift; sourceTree = "<group>"; };
+		CB4CE6FF2BB960F000A42220 /* LocationBooking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBooking.swift; sourceTree = "<group>"; };
 		CB4D82822ADCEB0100CE2AC1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CB4D82842ADCEB1600CE2AC1 /* MyVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVehicleView.swift; sourceTree = "<group>"; };
 		CB4D82862ADCEB2900CE2AC1 /* SettingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRow.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 				CB231CF12B413B9F00A6196D /* ServiceModel.swift */,
 				CB49C9CF2B562DAE008568A7 /* SupportUserModel.swift */,
 				CB49C9D12B563004008568A7 /* MessageModel.swift */,
+				CB4CE6FF2BB960F000A42220 /* LocationBooking.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				CBA7907E2B45136300A8288B /* CarViewModel.swift */,
 				CB40BB152B539E79008FBB1E /* SocketViewModel.swift */,
 				CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */,
+				CB4CE6FD2BB9580700A42220 /* UserHomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -554,6 +560,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB4CE7002BB960F000A42220 /* LocationBooking.swift in Sources */,
 				CB3EB45D2AD51C6300C26505 /* BackgroundCleanerView.swift in Sources */,
 				CBFE45F02AB81DA200751656 /* SignInView.swift in Sources */,
 				CBAED7542B426C600080A47B /* ProfileViewModel.swift in Sources */,
@@ -580,6 +587,7 @@
 				CBA903932AE289DC00A7D1E9 /* TipsListView.swift in Sources */,
 				CB5859B32ADC10C800540729 /* WalletView.swift in Sources */,
 				CB608E552ADE45D300B5B793 /* EditProfileView.swift in Sources */,
+				CB4CE6FE2BB9580700A42220 /* UserHomeViewModel.swift in Sources */,
 				CB4D828D2ADCEF6000CE2AC1 /* VehicleDocumentRow.swift in Sources */,
 				CBFE45EC2AB81A6500751656 /* OTPView.swift in Sources */,
 				CBF3F4E32B559D0C00D7D5CE /* SupportMessageView.swift in Sources */,

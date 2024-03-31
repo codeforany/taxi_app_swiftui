@@ -34,38 +34,6 @@
             endingLineNumber = "53"
             landmarkName = "statiDataApi()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9FD1013E-F4B7-4AD3-9883-2A0D541F8D96 - 53c7317da1c12925"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; () in taxi_driver.MainViewModel.staticDataApi() -&gt; ()"
-                  moduleName = "taxi_driver"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/codeforany/Desktop/CodeForAny/SwiftUI/taxi_driver/taxi_driver/ViewModel/MainViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "748">
-               </Location>
-               <Location
-                  uuid = "9FD1013E-F4B7-4AD3-9883-2A0D541F8D96 - 2da3d16e0f6c7c70"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; () in taxi_driver.MainViewModel.statiDataApi() -&gt; ()"
-                  moduleName = "taxi_driver"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/codeforany/Desktop/CodeForAny/SwiftUI/taxi_driver/taxi_driver/ViewModel/MainViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "748">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

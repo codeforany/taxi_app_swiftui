@@ -11,39 +11,40 @@ import MapKit
 
 struct UserHomeView: View {
     
-    @State private var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+    @StateObject var uVM = UserHomeViewModel.shared
     
-    @State private var isOpen = false
-    
-    @State private var isSelectPickup = true
-    @State private var isCarService = true
-    
-    @State private var serviceList = [
-        [
-            "icon":"car_1",
-            "name":"Economy",
-            "price":"$10-$20"
-        ],
-        
-        [
-            "icon":"car_1",
-            "name":"Luxury",
-            "price":"$13-$23"
-        ],
-        
-        [
-            "icon":"car_1",
-            "name":"First Class",
-            "price":"$25-$30"
-        ],
-    ]
-    
-    @State var selectServiceIndex = 0
     
     var body: some View {
         ZStack{
-            Map(coordinateRegion: $region)
+            Map(coordinateRegion: $uVM.region, annotationItems: uVM.pinArr, annotationContent: { pinObj in
+                
+                MapAnnotation(coordinate: pinObj.location) {
+                    Image(pinObj.isPickup ? "pickup_pin" : "drop_pin" )
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .offset(y: -13)
+                    
+                }
+                
+            })
                 .edgesIgnoringSafeArea(.all)
+                .onChange(of: uVM.selectReion, perform: { value in
+                    
+                    uVM.getAddressForLatLong(location: value.center, isPickup: uVM.isSelectPickup)
+                    
+                })
+            
+            
+            VStack{
+                
+                Image(uVM.isSelectPickup ? "pickup_pin" : "drop_pin" )
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             
             VStack{
                 
@@ -135,11 +136,46 @@ struct UserHomeView: View {
                 VStack(alignment:.leading){
                     Text("Pickup")
                         .font(.customfont(.extraBold, fontSize: 18))
+                        .foregroundColor(Color.secondaryApp)
+                    
+                    Button {
+                        withAnimation {
+                            uVM.showMapLocation(isPickup: true)
+                        }
+                       
+                        
+                    } label: {
+                        HStack(spacing: 15){
+                                
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill( Color.secondaryApp )
+                                .frame(width: 20, height: 20)
+                            
+                            Text( uVM.selectPickupAddress == "" ? "Select Pickup Location" :  uVM.selectPickupAddress)
+                                .lineLimit(1)
+                                .font(.customfont(.regular, fontSize: 17))
+                               
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Image(systemName: "arrow.forward")
+                                
+                        }
+                    }
+                    .foregroundColor(Color.placeholder)
+                    .padding(15)
+                    .background( Color.white )
+                    .cornerRadius( 10 )
+                    .shadow(color: uVM.isSelectPickup  ? Color.secondaryApp : Color.black.opacity(0.2) , radius: 2 )
+                    .padding(.bottom, 15)
+                    
+                    Text("Drop Off")
+                        .font(.customfont(.extraBold, fontSize: 18))
                         .foregroundColor(Color.primaryApp)
                     
                     Button {
-                        
-                        isSelectPickup = true
+                        withAnimation {
+                            uVM.showMapLocation(isPickup: false)
+                        }
                         
                     } label: {
                         HStack(spacing: 15){
@@ -148,9 +184,9 @@ struct UserHomeView: View {
                                 .fill( Color.primaryApp )
                                 .frame(width: 20, height: 20)
                             
-                            Text("Select Pickup Location")
+                            Text( uVM.selectDropOffAddress == "" ? "Select DropOff Location" : uVM.selectDropOffAddress )
+                                .lineLimit(1)
                                 .font(.customfont(.regular, fontSize: 17))
-                               
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Image(systemName: "arrow.forward")
@@ -161,38 +197,7 @@ struct UserHomeView: View {
                     .padding(15)
                     .background( Color.white )
                     .cornerRadius( 10 )
-                    .shadow(color: isSelectPickup  ? Color.primaryApp : Color.black.opacity(0.2) , radius: 2 )
-                    .padding(.bottom, 15)
-                    
-                    Text("Drop Off")
-                        .font(.customfont(.extraBold, fontSize: 18))
-                        .foregroundColor(Color.redApp)
-                    
-                    Button {
-                        
-                        isSelectPickup = false
-                        
-                    } label: {
-                        HStack(spacing: 15){
-                                
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill( Color.redApp )
-                                .frame(width: 20, height: 20)
-                            
-                            Text("Select Pickup Location")
-                                .font(.customfont(.regular, fontSize: 17))
-                               
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "arrow.forward")
-                                
-                        }
-                    }
-                    .foregroundColor(Color.placeholder)
-                    .padding(15)
-                    .background( Color.white )
-                    .cornerRadius( 10 )
-                    .shadow(color: !isSelectPickup  ? Color.redApp : Color.black.opacity(0.2) , radius: 2 )
+                    .shadow(color: !uVM.isSelectPickup  ? Color.primaryApp : Color.black.opacity(0.2) , radius: 2 )
                     .padding(.bottom, 25)
 
                     
@@ -217,7 +222,7 @@ struct UserHomeView: View {
                 
             }
         }
-        .fullScreenCover(isPresented: $isCarService, content: {
+        .fullScreenCover(isPresented: $uVM.isCarService, content: {
             
                 
             VStack{
@@ -233,12 +238,12 @@ struct UserHomeView: View {
                         
                         LazyHStack (spacing: 15) {
                             
-                            ForEach( 0 ..< serviceList.count , id: \.self) { index in
+                            ForEach( 0 ..< uVM.serviceList.count , id: \.self) { index in
                                 
-                                let cObj = serviceList[index]
+                                let cObj = uVM.serviceList[index]
                                 
                                 Button {
-                                    selectServiceIndex = index
+                                    uVM.selectServiceIndex = index
                                 } label: {
                                     ZStack(alignment: .leading) {
                                         
@@ -256,7 +261,7 @@ struct UserHomeView: View {
                                         .frame(width: 200, height: 120, alignment: .leading)
                                         .background(Color.white)
                                         .cornerRadius(15)
-                                        .shadow( color: selectServiceIndex == index ? Color.primaryApp : Color.black.opacity(0.2) , radius: 2)
+                                        .shadow( color: uVM.selectServiceIndex == index ? Color.primaryApp : Color.black.opacity(0.2) , radius: 2)
                                         .padding(.leading, 70)
                                         
                                         
@@ -315,3 +320,17 @@ struct UserHomeView: View {
     UserHomeView()
 }
 
+extension MKCoordinateRegion: Equatable {
+    public static func == (lhs: MKCoordinateRegion, rhs: MKCoordinateRegion) -> Bool {
+        
+        if( lhs.center.latitude == rhs.center.latitude && lhs.span.latitudeDelta == rhs.span.latitudeDelta && lhs.center.longitude == rhs.center.longitude  ) {
+            return true
+        }else{
+            return false
+        }
+        
+    }
+    
+        
+    
+}
