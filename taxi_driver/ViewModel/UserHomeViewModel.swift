@@ -12,7 +12,7 @@ class UserHomeViewModel : ObservableObject {
     static var shared = UserHomeViewModel()
     
     
-    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)) {
+    @Published var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 21.1702, longitude: 72.8311), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)) {
         
         didSet {
             print("\( region.center.latitude ), \( region.center.longitude )")
@@ -21,7 +21,7 @@ class UserHomeViewModel : ObservableObject {
     
     @Published var pinArr: [LocationBooking] = []
     
-    @Published var selectReion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+    @Published var selectReion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 21.1702, longitude: 72.8311), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     
     
     @Published var selectPickUp: CLLocationCoordinate2D?
@@ -60,8 +60,11 @@ class UserHomeViewModel : ObservableObject {
     
     @Published var selectServiceIndex = 0
     
+    @Published var activeZoneArr: [ZoneModel] = []
+    
     init(){
         setupRegionDebounce()
+        activeZoneArr = DBHelper.shared.getActiveZone()
     }
     
     func setupRegionDebounce(){
@@ -177,6 +180,22 @@ class UserHomeViewModel : ObservableObject {
                 
                 if(isPickup) {
                     self.selectPickupAddress = addressString
+                    
+                    var isFound = false
+                    var obj: ZoneModel?
+                    
+                    for zoneData in self.activeZoneArr {
+                        if MapKitUtils.isInsideZone(location: location, zoneJson: zoneData.zoneJson) {
+                            print(" Inside Zone Found: \(zoneData.zoneId), \(zoneData.zoneName ) ")
+                            isFound = true
+                            obj = zoneData
+                        }
+                    }
+                    
+                    
+                    print(" \n \( isFound ? " Zone Found" : "Not Found" )" )
+                    print(obj)
+                    
                 }else{
                     self.selectDropOffAddress = addressString
                 }

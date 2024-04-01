@@ -49,6 +49,8 @@
 		CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD862ADA3E6900FED1CA /* SummaryView.swift */; };
 		CB88DD892ADA3FB200FED1CA /* TodaySummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD882ADA3FB200FED1CA /* TodaySummaryRow.swift */; };
 		CB88DD8B2ADA3FCD00FED1CA /* WeeklySummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD8A2ADA3FCD00FED1CA /* WeeklySummaryRow.swift */; };
+		CB8AACE52BBAF661001D6787 /* ZoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8AACE42BBAF661001D6787 /* ZoneModel.swift */; };
+		CB8AACE72BBAF8A6001D6787 /* MapKitUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8AACE62BBAF8A6001D6787 /* MapKitUtils.swift */; };
 		CBA7907F2B45136300A8288B /* CarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA7907E2B45136300A8288B /* CarViewModel.swift */; };
 		CBA903932AE289DC00A7D1E9 /* TipsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA903922AE289DC00A7D1E9 /* TipsListView.swift */; };
 		CBA903952AE28B2A00A7D1E9 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA903942AE28B2A00A7D1E9 /* HelpView.swift */; };
@@ -159,6 +161,8 @@
 		CB88DD862ADA3E6900FED1CA /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		CB88DD882ADA3FB200FED1CA /* TodaySummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySummaryRow.swift; sourceTree = "<group>"; };
 		CB88DD8A2ADA3FCD00FED1CA /* WeeklySummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryRow.swift; sourceTree = "<group>"; };
+		CB8AACE42BBAF661001D6787 /* ZoneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneModel.swift; sourceTree = "<group>"; };
+		CB8AACE62BBAF8A6001D6787 /* MapKitUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitUtils.swift; sourceTree = "<group>"; };
 		CBA7907E2B45136300A8288B /* CarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewModel.swift; sourceTree = "<group>"; };
 		CBA903922AE289DC00A7D1E9 /* TipsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsListView.swift; sourceTree = "<group>"; };
 		CBA903942AE28B2A00A7D1E9 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				CB49C9CF2B562DAE008568A7 /* SupportUserModel.swift */,
 				CB49C9D12B563004008568A7 /* MessageModel.swift */,
 				CB4CE6FF2BB960F000A42220 /* LocationBooking.swift */,
+				CB8AACE42BBAF661001D6787 /* ZoneModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				CB0B03552B96ED6F00DAC455 /* DBHelper.swift */,
+				CB8AACE62BBAF8A6001D6787 /* MapKitUtils.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -566,6 +572,7 @@
 				CBAED7542B426C600080A47B /* ProfileViewModel.swift in Sources */,
 				CB50746B2ABABEEB00B4C834 /* SubscriptionPlanView.swift in Sources */,
 				CB04A7652B3E772C00FDDEAE /* ImagePicker.swift in Sources */,
+				CB8AACE72BBAF8A6001D6787 /* MapKitUtils.swift in Sources */,
 				CB04BECB2ADF83CD008AADA9 /* RatingRow.swift in Sources */,
 				CB5859B52ADC10E300540729 /* AddMoneyWalletView.swift in Sources */,
 				CBB02FA52AB96C70009C42DB /* BankDetailsView.swift in Sources */,
@@ -601,6 +608,7 @@
 				CBF901F12AB706A200296488 /* CountryPickerUI.swift in Sources */,
 				CB49C9D22B563004008568A7 /* MessageModel.swift in Sources */,
 				CBF901EC2AB703FC00296488 /* MobileNumberView.swift in Sources */,
+				CB8AACE52BBAF661001D6787 /* ZoneModel.swift in Sources */,
 				CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */,
 				CB4C20C82AD29A5D0081B3FE /* TipRequestView.swift in Sources */,
 				CB8678752B5B76BF008322D5 /* UserHomeView.swift in Sources */,

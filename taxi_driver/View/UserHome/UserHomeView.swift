@@ -28,14 +28,13 @@ struct UserHomeView: View {
                 }
                 
             })
-                .edgesIgnoringSafeArea(.all)
-                .onChange(of: uVM.selectReion, perform: { value in
-                    
-                    uVM.getAddressForLatLong(location: value.center, isPickup: uVM.isSelectPickup)
-                    
-                })
-            
-            
+            .edgesIgnoringSafeArea(.all)
+            .onChange(of: uVM.selectReion, perform: { value in
+                
+                uVM.getAddressForLatLong(location: value.center, isPickup: uVM.isSelectPickup)
+                
+            })
+         
             VStack{
                 
                 Image(uVM.isSelectPickup ? "pickup_pin" : "drop_pin" )

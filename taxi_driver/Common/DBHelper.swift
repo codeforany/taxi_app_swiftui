@@ -321,4 +321,29 @@ class DBHelper {
         }
     }
     
+    func getActiveZone() -> [ZoneModel] {
+        
+        do {
+            
+            let dataSQL = tbZone.select(tbZone[*]).join(tbPrice, on: tbZone[zoneId] == tbPrice[zoneId]).filter(tbPrice[status] == "1" && tbZone[status] == "1").group(tbZone[zoneId])
+            
+            var dataArr: [ZoneModel] = []
+            if let  dbConnection = dbConnection {
+                for user in try dbConnection.prepare(dataSQL) {
+                    dataArr.append(ZoneModel(zoneId: "\( user[zoneId] )", zoneName: "\( user[zoneName] )", zoneJson: "\( user[zoneJson] )"))
+                }
+            }
+            
+            return dataArr
+            
+        }
+        catch {
+            print("DB Table Zone List Get Data Error")
+        }
+        
+        
+        return []
+        
+    }
+    
 }
