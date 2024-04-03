@@ -38,25 +38,15 @@ class UserHomeViewModel : ObservableObject {
     @Published var isSelectPickup = true
     @Published var isCarService = false
     
-    @Published var serviceList = [
-        [
-            "icon":"car_1",
-            "name":"Economy",
-            "price":"$10-$20"
-        ],
-        
-        [
-            "icon":"car_1",
-            "name":"Luxury",
-            "price":"$13-$23"
-        ],
-        
-        [
-            "icon":"car_1",
-            "name":"First Class",
-            "price":"$25-$30"
-        ],
-    ]
+    @Published var selectZone: ZoneModel?
+    @Published var selectRoad: Road?
+    @Published var estDistance: Double = 0
+    @Published var estDuration: Double = 0
+    @Published var avaiableServicePriceArr: [ServicePriceModel] = []
+    
+    @Published var showError  = false
+    @Published var errorMessage = ""
+    
     
     @Published var selectServiceIndex = 0
     
@@ -119,6 +109,30 @@ class UserHomeViewModel : ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             self.isLock = false
         }
+        
+    }
+    
+    func actionContinue(){
+        
+        if selectPickUp == nil {
+            errorMessage = "Please select pickup location"
+            showError = true
+            return
+        }
+        
+        if selectDropOff == nil {
+            errorMessage = "Please select drop off location"
+            showError = true
+            return
+        }
+        
+        if selectZone == nil || avaiableServicePriceArr.isEmpty {
+            errorMessage = "Not Provide any service in this area"
+            showError = true
+            return
+        }
+        
+        isCarService = true
         
     }
     
@@ -196,8 +210,41 @@ class UserHomeViewModel : ObservableObject {
                     print(" \n \( isFound ? " Zone Found" : "Not Found" )" )
                     print(obj)
                     
+                    self.selectZone = obj
+                    
                 }else{
                     self.selectDropOffAddress = addressString
+                }
+                
+                if(self.selectPickUp != nil && self.selectDropOff != nil) {
+                    
+                    let rm = RoadManager()
+                    rm.getRoad(wayPoints: [ "\(self.selectPickUp!.longitude),\(self.selectPickUp!.latitude)", "\(self.selectDropOff!.longitude),\(self.selectDropOff!.latitude)"  ], typeRoad: .bike) { roadData in
+                        
+                            
+                        DispatchQueue.main.async {
+                            
+                            self.selectRoad = roadData
+                            print(self.selectRoad)
+                            
+                            if let roadData = roadData {
+                                self.estDistance = roadData.distance // in Km
+                                self.estDuration = roadData.duration / 60.0 // in min
+                                
+                                if let selectZone = self.selectZone {
+                                    // found zone price
+                                    self.avaiableServicePriceArr = DBHelper.shared.getZoneWiseServicePriceList(zObj: selectZone, estKM: self.estDistance, estTime: self.estDuration)
+                                }else{
+                                    // not data
+                                    self.avaiableServicePriceArr = []
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 }
                 print(addressString)
                 

@@ -17,6 +17,11 @@
 		CB1501E62AD9034F0002AE2B /* EarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1501E52AD9034F0002AE2B /* EarningView.swift */; };
 		CB231CF22B413B9F00A6196D /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB231CF12B413B9F00A6196D /* ServiceModel.swift */; };
 		CB231CF42B413C6C00A6196D /* DriverEditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB231CF32B413C6C00A6196D /* DriverEditProfileView.swift */; };
+		CB341BA82BBD0A0B0093D421 /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = CB341BA72BBD0A0B0093D421 /* en.json */; };
+		CB341BAA2BBD0A2B0093D421 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB341BA92BBD0A2B0093D421 /* Road.swift */; };
+		CB341BAC2BBD0AAC0093D421 /* RoadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB341BAB2BBD0AAC0093D421 /* RoadManager.swift */; };
+		CB341BAF2BBD0AE80093D421 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = CB341BAE2BBD0AE80093D421 /* Alamofire */; };
+		CB341BB12BBD0D300093D421 /* ServicePriceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB341BB02BBD0D300093D421 /* ServicePriceModel.swift */; };
 		CB3C00912AD61E4300E152EC /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C00902AD61E4300E152EC /* MenuView.swift */; };
 		CB3EB45D2AD51C6300C26505 /* BackgroundCleanerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3EB45C2AD51C6300C26505 /* BackgroundCleanerView.swift */; };
 		CB3EB45F2AD51D0E00C26505 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3EB45E2AD51D0E00C26505 /* VisualEffectView.swift */; };
@@ -130,6 +135,10 @@
 		CB1501E52AD9034F0002AE2B /* EarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarningView.swift; sourceTree = "<group>"; };
 		CB231CF12B413B9F00A6196D /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		CB231CF32B413C6C00A6196D /* DriverEditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverEditProfileView.swift; sourceTree = "<group>"; };
+		CB341BA72BBD0A0B0093D421 /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
+		CB341BA92BBD0A2B0093D421 /* Road.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
+		CB341BAB2BBD0AAC0093D421 /* RoadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadManager.swift; sourceTree = "<group>"; };
+		CB341BB02BBD0D300093D421 /* ServicePriceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePriceModel.swift; sourceTree = "<group>"; };
 		CB3C00902AD61E4300E152EC /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		CB3EB45C2AD51C6300C26505 /* BackgroundCleanerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCleanerView.swift; sourceTree = "<group>"; };
 		CB3EB45E2AD51D0E00C26505 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
@@ -236,6 +245,7 @@
 				CBD647BF2B3A0D0700867954 /* FirebaseDatabase in Frameworks */,
 				CBD647E12B3A0D0700867954 /* FirebaseStorageCombine-Community in Frameworks */,
 				CB40BB142B539E5F008FBB1E /* SocketIO in Frameworks */,
+				CB341BAF2BBD0AE80093D421 /* Alamofire in Frameworks */,
 				CBF901EF2AB7067000296488 /* CountryPicker in Frameworks */,
 				CBD647B92B3A0D0700867954 /* FirebaseAuth in Frameworks */,
 				CBF200742B47BC0A000E245B /* SDWebImageSwiftUI in Frameworks */,
@@ -256,6 +266,8 @@
 				CB49C9D12B563004008568A7 /* MessageModel.swift */,
 				CB4CE6FF2BB960F000A42220 /* LocationBooking.swift */,
 				CB8AACE42BBAF661001D6787 /* ZoneModel.swift */,
+				CB341BA92BBD0A2B0093D421 /* Road.swift */,
+				CB341BB02BBD0D300093D421 /* ServicePriceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -333,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				CBD647E42B3A0D9300867954 /* taxi_driver.entitlements */,
+				CB341BA72BBD0A0B0093D421 /* en.json */,
 				CBF901D32AB6D74A00296488 /* taxi-driver-Info.plist */,
 				CBF901D02AB6D61B00296488 /* View */,
 				CB231CF02B413B8700A6196D /* Model */,
@@ -401,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				CB0B03552B96ED6F00DAC455 /* DBHelper.swift */,
+				CB341BAB2BBD0AAC0093D421 /* RoadManager.swift */,
 				CB8AACE62BBAF8A6001D6787 /* MapKitUtils.swift */,
 			);
 			path = Common;
@@ -497,6 +511,7 @@
 				CBF200732B47BC0A000E245B /* SDWebImageSwiftUI */,
 				CB40BB132B539E5F008FBB1E /* SocketIO */,
 				CB0B03532B96ED0A00DAC455 /* SQLite */,
+				CB341BAE2BBD0AE80093D421 /* Alamofire */,
 			);
 			productName = taxi_driver;
 			productReference = CBF901B22AB6D57600296488 /* taxi_driver.app */;
@@ -532,6 +547,7 @@
 				CBF200722B47BC0A000E245B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				CB40BB122B539E5F008FBB1E /* XCRemoteSwiftPackageReference "socket" */,
 				CB0B03522B96ED0A00DAC455 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				CB341BAD2BBD0AE80093D421 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = CBF901B32AB6D57600296488 /* Products */;
 			projectDirPath = "";
@@ -547,6 +563,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB341BA82BBD0A0B0093D421 /* en.json in Resources */,
 				CBF901BD2AB6D57700296488 /* Preview Assets.xcassets in Resources */,
 				CBF901CD2AB6D5D600296488 /* NunitoSans-Bold.ttf in Resources */,
 				CBD647E32B3A0D7700867954 /* GoogleService-Info.plist in Resources */,
@@ -569,6 +586,8 @@
 				CB4CE7002BB960F000A42220 /* LocationBooking.swift in Sources */,
 				CB3EB45D2AD51C6300C26505 /* BackgroundCleanerView.swift in Sources */,
 				CBFE45F02AB81DA200751656 /* SignInView.swift in Sources */,
+				CB341BB12BBD0D300093D421 /* ServicePriceModel.swift in Sources */,
+				CB341BAA2BBD0A2B0093D421 /* Road.swift in Sources */,
 				CBAED7542B426C600080A47B /* ProfileViewModel.swift in Sources */,
 				CB50746B2ABABEEB00B4C834 /* SubscriptionPlanView.swift in Sources */,
 				CB04A7652B3E772C00FDDEAE /* ImagePicker.swift in Sources */,
@@ -578,6 +597,7 @@
 				CBB02FA52AB96C70009C42DB /* BankDetailsView.swift in Sources */,
 				CB88DD8B2ADA3FCD00FED1CA /* WeeklySummaryRow.swift in Sources */,
 				CB4D82832ADCEB0100CE2AC1 /* SettingsView.swift in Sources */,
+				CB341BAC2BBD0AAC0093D421 /* RoadManager.swift in Sources */,
 				CB3EB4612AD522FF00C26505 /* ReasonView.swift in Sources */,
 				CBE5452A2B3FE5A100446969 /* MainViewModel.swift in Sources */,
 				CB5074672ABABD8500B4C834 /* AddVehicleView.swift in Sources */,
@@ -865,6 +885,14 @@
 				minimumVersion = 0.15.0;
 			};
 		};
+		CB341BAD2BBD0AE80093D421 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
 		CB40BB122B539E5F008FBB1E /* XCRemoteSwiftPackageReference "socket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
@@ -904,6 +932,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CB0B03522B96ED0A00DAC455 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		CB341BAE2BBD0AE80093D421 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB341BAD2BBD0AE80093D421 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		CB40BB132B539E5F008FBB1E /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;

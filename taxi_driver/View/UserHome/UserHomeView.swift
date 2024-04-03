@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import SDWebImageSwiftUI
 
 
 struct UserHomeView: View {
@@ -201,7 +202,8 @@ struct UserHomeView: View {
 
                     
                     
-                    NavigationLink {
+                    Button {
+                        uVM.actionContinue()
                     } label: {
                         Text("CONTINUE")
                             .font(.customfont(.regular, fontSize: 16))
@@ -237,9 +239,9 @@ struct UserHomeView: View {
                         
                         LazyHStack (spacing: 15) {
                             
-                            ForEach( 0 ..< uVM.serviceList.count , id: \.self) { index in
+                            ForEach( 0 ..< uVM.avaiableServicePriceArr.count , id: \.self) { index in
                                 
-                                let cObj = uVM.serviceList[index]
+                                let cObj = uVM.avaiableServicePriceArr[index]
                                 
                                 Button {
                                     uVM.selectServiceIndex = index
@@ -247,11 +249,11 @@ struct UserHomeView: View {
                                     ZStack(alignment: .leading) {
                                         
                                         VStack {
-                                            Text(cObj["name"] as? String ?? "")
+                                            Text(cObj.serviceName)
                                                 .font(.customfont(.semiBold, fontSize: 17))
                                                 .foregroundColor( Color.primaryText )
                                             
-                                            Text(cObj["price"] as? String ?? "")
+                                            Text("$\( cObj.estPriceMin, specifier:  "%.2f" ) - $\(cObj.estPriceMax, specifier: "%.2f")")
                                                 .font(.customfont(.semiBold, fontSize: 17))
                                                 .foregroundColor( Color.primaryApp )
                                         }
@@ -264,8 +266,9 @@ struct UserHomeView: View {
                                         .padding(.leading, 70)
                                         
                                         
-                                        Image( cObj["icon"] as? String ?? "" )
+                                        WebImage(url: URL(string: cObj.icon))
                                             .resizable()
+                                            .indicator(.activity)
                                             .scaledToFit()
                                             .frame(width: 130,  height: 100 )
                                         
@@ -285,7 +288,10 @@ struct UserHomeView: View {
                     .frame(height: 160, alignment: .leading)
                     
                     
-                    NavigationLink {
+                    Button {
+                        
+                        uVM.isCarService = false
+                        
                     } label: {
                         Text("Send Request")
                             .font(.customfont(.regular, fontSize: 16))
@@ -305,6 +311,12 @@ struct UserHomeView: View {
             }
             .background(BackgroundCleanerView())
             .ignoresSafeArea()
+        })
+        .alert(isPresented: $uVM.showError, content: {
+            
+            Alert(title: Text(Globs.AppName), message: Text( uVM.errorMessage ), dismissButton: .default(Text("Ok")) {
+                
+            })
         })
         .navigationTitle("")
         .navigationBarBackButtonHidden()

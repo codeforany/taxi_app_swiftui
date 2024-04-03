@@ -346,4 +346,32 @@ class DBHelper {
         
     }
     
+    func getZoneWiseServicePriceList(zObj: ZoneModel, estKM: Double, estTime: Double) -> [ServicePriceModel] {
+        do {
+            
+            let dataSQL = tbService.select(tbService[*], tbPrice[*]).join(tbPrice, on: tbService[serviceId] == tbPrice[serviceId]).filter(tbPrice[status] == "1" && tbService[status] == "1" && tbPrice[zoneId] == zObj.zoneId)
+            
+            var dataArr: [ServicePriceModel] = []
+            if let  dbConnection = dbConnection {
+                for spObj in try dbConnection.prepare(dataSQL) {
+                    
+                    let pObj = ServicePriceModel(serviceId: "\( spObj[ tbService[serviceId]] )", priceId: "\( spObj[ tbPrice[serviceId]] )", baseCharge: Double( "\( spObj[ tbPrice[baseCharge]] )" ) ?? 0.0, perKmCharge: Double( "\( spObj[ tbPrice[perKmCharge]] )" ) ?? 0.0, perMinCharge: Double( "\( spObj[ tbPrice[perMinCharge]] )" ) ?? 0.0, bookingCharge: Double( "\( spObj[ tbPrice[bookingCharge]] )" ) ?? 0.0, miniFair: Double( "\( spObj[ tbPrice[miniFair]] )" ) ?? 0.0, miniKm: Double( "\( spObj[ tbPrice[miniKm]] )" ) ?? 0.0, serviceName: "\( spObj[ tbService[serviceName]] )", color: "\( spObj[ tbService[color]] )", icon: "\( spObj[ tbService[icon]] )")
+                    
+                    pObj.getEstValue(estKM: estKM, estTime: estTime)                    
+                    dataArr.append(pObj)
+                }
+            }
+            
+            return dataArr
+            
+        }
+        catch {
+            print("DB Table Zone List Get Data Error")
+        }
+        
+        
+        return []
+        
+    }
+    
 }
