@@ -74,8 +74,10 @@ struct taxi_driverApp: App {
                     ProfileImageView()
                 }else if ( mainVM.showType == 2) {
                     EditProfileView()
-                }else{
+                }else if ( mainVM.showType == 3){
                     HomeView()
+                }else if (mainVM.showType == 4) {
+                    UserHomeView()
                 }
             }
             

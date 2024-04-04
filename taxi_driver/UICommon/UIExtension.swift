@@ -214,7 +214,7 @@ extension Date {
     
     var string: String {
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd hh:mm a"
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return df.string(from: self)
     }
 }

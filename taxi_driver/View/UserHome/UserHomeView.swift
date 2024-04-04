@@ -289,9 +289,7 @@ struct UserHomeView: View {
                     
                     
                     Button {
-                        
-                        uVM.isCarService = false
-                        
+                        uVM.actionBooking()
                     } label: {
                         Text("Send Request")
                             .font(.customfont(.regular, fontSize: 16))
@@ -311,6 +309,12 @@ struct UserHomeView: View {
             }
             .background(BackgroundCleanerView())
             .ignoresSafeArea()
+            .alert(isPresented: $uVM.showError, content: {
+                
+                Alert(title: Text(Globs.AppName), message: Text( uVM.errorMessage ), dismissButton: .default(Text("Ok")) {
+                    
+                })
+            })
         })
         .alert(isPresented: $uVM.showError, content: {
             

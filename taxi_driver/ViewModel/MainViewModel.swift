@@ -16,6 +16,7 @@ class MainViewModel: ObservableObject  {
     // 1 = Show Profile Image
     // 2 = Show profile Detail Edit
     // 3 = Show Home
+    // 4 = Show User Home
     
     
     init() {
@@ -33,13 +34,18 @@ class MainViewModel: ObservableObject  {
             ServiceCall.userPayload = Utils.UDValue(key: Globs.userPayload) as? NSDictionary ?? [:]
             ServiceCall.userType = ServiceCall.userPayload.value(forKey: KKey.userType) as? Int ?? 1
             
-            if(ServiceCall.userPayload.value(forKey: "image") as? String ?? "" == "" ) {
-                showType = 1
-            }else if (ServiceCall.userPayload.value(forKey: "name") as? String ?? "" == "" ) {
-                showType = 2
+            if(ServiceCall.userType == 1) {
+                showType = 4
             }else{
-                showType = 3
+                if(ServiceCall.userPayload.value(forKey: "image") as? String ?? "" == "" ) {
+                    showType = 1
+                }else if (ServiceCall.userPayload.value(forKey: "name") as? String ?? "" == "" ) {
+                    showType = 2
+                }else{
+                    showType = 3
+                }
             }
+            
         }
     }
     

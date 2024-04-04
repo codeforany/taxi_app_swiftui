@@ -253,4 +253,66 @@ class UserHomeViewModel : ObservableObject {
         }
     }
     
+    func actionBooking(){
+        
+        apiBookingRequest(parameter: [
+            "pickup_latitude": "\(selectPickUp?.latitude ?? 0.0)",
+            "pickup_longitude": "\(selectPickUp?.longitude ?? 0.0)",
+            "pickup_address": selectPickupAddress,
+            "drop_latitude": "\(selectDropOff?.latitude ?? 0.0)",
+            "drop_longitude": "\(selectDropOff?.latitude ?? 0.0)",
+            "drop_address": selectDropOffAddress,
+            "pickup_date": Date().string,
+            "payment_type": "1",
+            "card_id": "",
+            "price_id": avaiableServicePriceArr[selectServiceIndex].priceId,
+            "service_id": avaiableServicePriceArr[selectServiceIndex].serviceId,
+            "est_total_distance": estDistance,
+            "est_duration": estDuration,
+            "amount": avaiableServicePriceArr[selectServiceIndex].estPriceMax,
+        ])
+    }
+    
+    func allClear(){
+        self.selectDropOff = nil
+        self.selectDropOffAddress = ""
+        selectServiceIndex = 0
+        avaiableServicePriceArr = []
+        pinArr = []
+        selectRoad = nil
+        estDuration = 0
+        estDistance = 0
+        showMapLocation(isPickup: true)
+    }
+    
+    //MARK: ApiCalling
+    
+    func apiBookingRequest(parameter: NSDictionary) {
+        
+        
+        ServiceCall.post(parameter: parameter, path: Globs.svBookingRequest, isTokenApi: true) { responseObj in
+            if let responseObj = responseObj {
+                
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    self.isCarService = false
+                    self.allClear()
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        self.showError = true
+                    }
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+                
+            }
+        } failure: { error in
+            self.errorMessage =  error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+
+        
+    }
+    
 }

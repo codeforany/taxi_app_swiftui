@@ -92,7 +92,21 @@ struct MobileNumberView: View {
                             loginVM.submitMobileNumber(cObj: countryObj)
                         }
                     } label: {
-                        Text("CONTINUE")
+                        Text("Login as Driver")
+                            .font(.customfont(.regular, fontSize: 16))
+                            .foregroundColor(Color.white)
+                    }
+                    .frame(maxWidth: .infinity, minHeight: 45 , alignment: .center)
+                    .background( Color.primaryApp )
+                    .cornerRadius(25)
+                    .padding(.bottom, 15)
+                    
+                    Button {
+                        if let countryObj = countryObj {
+                            loginVM.submitMobileNumber(cObj: countryObj, isDriver: false)
+                        }
+                    } label: {
+                        Text("Login as User")
                             .font(.customfont(.regular, fontSize: 16))
                             .foregroundColor(Color.white)
                     }

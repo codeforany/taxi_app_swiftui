@@ -24,8 +24,9 @@ class LoginViewModel: ObservableObject {
     
     @Published var showError = false
     @Published var errorMessage = ""
+    var isDriverLoginFlow = true
     
-    func submitMobileNumber(cObj: Country) {
+    func submitMobileNumber(cObj: Country, isDriver: Bool = true ) {
         if(txtMobile.count < 10) {
             errorMessage = "Please enter valide mobile number"
             showError = true
@@ -35,6 +36,7 @@ class LoginViewModel: ObservableObject {
         txtMobileCode = "+\( cObj.phoneCode)"
         country = cObj
         showOTP = true
+        isDriverLoginFlow = isDriver
         
         sendSMS()
     
@@ -72,10 +74,7 @@ class LoginViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
                 self.showError  = true
             }else{
-//                self.errorMessage = "UID: \( authResult?.user.uid ?? "" ) Login Successfully "
-//                self.showError  = true
-                
-                self.loginApi(parameter: ["user_type":  "2", "mobile_code": self.txtMobileCode, "mobile": self.txtMobile, "os_type": "i", "push_token":"", "socket_id": ""  ])
+                self.loginApi(parameter: ["user_type": self.isDriverLoginFlow ? "2" : "1", "mobile_code": self.txtMobileCode, "mobile": self.txtMobile, "os_type": "i", "push_token":"", "socket_id": ""  ])
             }
         }
         
@@ -95,13 +94,6 @@ class LoginViewModel: ObservableObject {
                     
                     Utils.UDSET(data: ServiceCall.userPayload, key: Globs.userPayload)
                     Utils.UDSET(data: true, key: Globs.userLogin)
-                    
-                    
-                    
-                    
-                    self.errorMessage = "Login Api Calling Successfully "
-                    self.showError  = true
-
                     MainViewModel.shard.reloadData()
                     
                 }else{
