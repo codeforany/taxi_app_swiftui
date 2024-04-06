@@ -13,6 +13,7 @@ struct Globs {
     
     static let userPayload = "user_payload"
     static let userLogin = "user_login"
+    static let isOnline = "is_online"
     
     static let BASE_URL = "http://localhost:3001"
     static let API_URL = BASE_URL + "/api/"
@@ -42,7 +43,9 @@ struct Globs {
     
     static let svStaticData = API_URL + "static_data"
     static let svBookingRequest = API_URL + "booking_request"
+    static let svUpdateLocation = API_URL + "update_location"
     
+    static let svDriverOnline = API_URL + "driver_online"
     
     
 }

@@ -66,6 +66,7 @@
 		CBB02FA92AB96E42009C42DB /* DocumentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB02FA82AB96E42009C42DB /* DocumentRow.swift */; };
 		CBB5FF582B3A845F00309277 /* ServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5FF572B3A845F00309277 /* ServiceCall.swift */; };
 		CBB5FF5A2B3A847900309277 /* Globs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5FF592B3A847900309277 /* Globs.swift */; };
+		CBC52B792BBFBDD000E904A9 /* LocationManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */; };
 		CBCB7F5F2AD11450008DC040 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB7F5E2AD11450008DC040 /* HomeView.swift */; };
 		CBD647AD2B3A0D0700867954 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CBD647AC2B3A0D0700867954 /* FirebaseAnalytics */; };
 		CBD647AF2B3A0D0700867954 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = CBD647AE2B3A0D0700867954 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -100,6 +101,7 @@
 		CBE8DC742AD7AFB60042DDDE /* TripDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE8DC732AD7AFB60042DDDE /* TripDetailsView.swift */; };
 		CBE8DC7A2AD7B7300042DDDE /* TitleSubtitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE8DC792AD7B7300042DDDE /* TitleSubtitleButton.swift */; };
 		CBE8DC7C2AD7B7910042DDDE /* TitleSubtitleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE8DC7B2AD7B7910042DDDE /* TitleSubtitleRow.swift */; };
+		CBF0F3602BC109D5007C004E /* DriverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */; };
 		CBF200742B47BC0A000E245B /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CBF200732B47BC0A000E245B /* SDWebImageSwiftUI */; };
 		CBF3F4E32B559D0C00D7D5CE /* SupportMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF3F4E22B559D0C00D7D5CE /* SupportMessageView.swift */; };
 		CBF3F4E52B55A22800D7D5CE /* SupportUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF3F4E42B55A22800D7D5CE /* SupportUserView.swift */; };
@@ -182,6 +184,7 @@
 		CBB02FA82AB96E42009C42DB /* DocumentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRow.swift; sourceTree = "<group>"; };
 		CBB5FF572B3A845F00309277 /* ServiceCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCall.swift; sourceTree = "<group>"; };
 		CBB5FF592B3A847900309277 /* Globs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globs.swift; sourceTree = "<group>"; };
+		CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerViewModel.swift; sourceTree = "<group>"; };
 		CBCB7F5E2AD11450008DC040 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		CBD647E22B3A0D7700867954 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBD647E42B3A0D9300867954 /* taxi_driver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = taxi_driver.entitlements; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		CBE8DC732AD7AFB60042DDDE /* TripDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsView.swift; sourceTree = "<group>"; };
 		CBE8DC792AD7B7300042DDDE /* TitleSubtitleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleButton.swift; sourceTree = "<group>"; };
 		CBE8DC7B2AD7B7910042DDDE /* TitleSubtitleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleRow.swift; sourceTree = "<group>"; };
+		CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverViewModel.swift; sourceTree = "<group>"; };
 		CBF3F4E22B559D0C00D7D5CE /* SupportMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportMessageView.swift; sourceTree = "<group>"; };
 		CBF3F4E42B55A22800D7D5CE /* SupportUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportUserView.swift; sourceTree = "<group>"; };
 		CBF901B22AB6D57600296488 /* taxi_driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = taxi_driver.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -312,6 +316,8 @@
 				CB40BB152B539E79008FBB1E /* SocketViewModel.swift */,
 				CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */,
 				CB4CE6FD2BB9580700A42220 /* UserHomeViewModel.swift */,
+				CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */,
+				CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -643,6 +649,7 @@
 				CBF901E62AB6F93E00296488 /* ChangeLanguageView.swift in Sources */,
 				CBD647E72B3A0DC300867954 /* LoginViewModel.swift in Sources */,
 				CBA7907F2B45136300A8288B /* CarViewModel.swift in Sources */,
+				CBF0F3602BC109D5007C004E /* DriverViewModel.swift in Sources */,
 				CBF901D22AB6D63500296488 /* UIExtension.swift in Sources */,
 				CB13DEEC2AD11CED00D3D69C /* IconTitleSubtitleButton.swift in Sources */,
 				CB40BB162B539E79008FBB1E /* SocketViewModel.swift in Sources */,
@@ -656,6 +663,7 @@
 				CB79EE2A2AD3BACF007F38CF /* RunTripView.swift in Sources */,
 				CB4D82852ADCEB1600CE2AC1 /* MyVehicleView.swift in Sources */,
 				CB231CF42B413C6C00A6196D /* DriverEditProfileView.swift in Sources */,
+				CBC52B792BBFBDD000E904A9 /* LocationManagerViewModel.swift in Sources */,
 				CB4D828B2ADCEE2A00CE2AC1 /* MyVelicleDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -790,7 +798,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "taxi-driver-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to Update or Change your profile image";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow to Update or Change your profile image";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This helps to show you in near by driver";
+				INFOPLIST_KEY_NSLocationUsageDescription = "This helps to show you in near by driver";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This helps to show you in near by driver";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -828,7 +838,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "taxi-driver-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow to Update or Change your profile image";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow to Update or Change your profile image";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "This helps to show you in near by driver";
+				INFOPLIST_KEY_NSLocationUsageDescription = "This helps to show you in near by driver";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This helps to show you in near by driver";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

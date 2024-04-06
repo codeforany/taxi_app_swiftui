@@ -11,6 +11,7 @@ import MapKit
 
 struct HomeView: View {
     
+    @StateObject var hVM = DriverViewModel.shared
     @State private var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     
     @State private var isOpen = false
@@ -95,10 +96,10 @@ struct HomeView: View {
                     Spacer()
                     
                     Button {
-                        
+                        hVM.actionGoOnline()
                     } label: {
                         ZStack{
-                            Text("GO")
+                            Text( hVM.isOnline ? "OFF" :  "GO")
                                 .font(.customfont(.semiBold, fontSize: 22))
                                 .foregroundColor(Color.white)
                         }
@@ -108,7 +109,7 @@ struct HomeView: View {
                         .cornerRadius(60)
                     }
                     .frame(width: 70, height: 70, alignment: .center)
-                    .background(Color.primaryApp)
+                    .background( hVM.isOnline ? Color.redApp : Color.primaryApp)
                     .cornerRadius(35)
 
                     
@@ -145,7 +146,7 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        Text("You're offiline")
+                        Text("You're \( hVM.isOnline ? "online" : "offiline" )")
                             .font(.customfont(.extraBold, fontSize: 18))
                             .foregroundColor(Color.primaryText)
                         Spacer()
@@ -188,11 +189,15 @@ struct HomeView: View {
                 
             }
         }
+        .alert(isPresented: $hVM.showError) {
+            Alert(title: Text(Globs.AppName), message: Text(hVM.errorMessage), dismissButton: .default(Text("Ok")) {
+                
+            } )
+        }
         .navigationTitle("")
         .navigationBarBackButtonHidden()
         .navigationBarHidden(true)
         .ignoresSafeArea()
-        
         
     }
 }

@@ -101,10 +101,6 @@ struct UserHomeView: View {
                         }
                         .frame(width: 60)
                     }
-
-                   
-                    
-                    
                     
                 }
                 .padding(.horizontal , 15)
@@ -114,10 +110,6 @@ struct UserHomeView: View {
                 
                 
                 HStack {
-                    
-                   
-
-                    
                     Spacer()
                     
                     Button(action: {
@@ -275,15 +267,9 @@ struct UserHomeView: View {
                                     }
                                     
                                 }
-
-                                
-                                
-                                
                             }
                             
-                            
                         }
-                        
                     }
                     .frame(height: 160, alignment: .leading)
                     

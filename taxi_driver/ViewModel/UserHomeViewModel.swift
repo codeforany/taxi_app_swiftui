@@ -55,6 +55,7 @@ class UserHomeViewModel : ObservableObject {
     init(){
         setupRegionDebounce()
         activeZoneArr = DBHelper.shared.getActiveZone()
+        
     }
     
     func setupRegionDebounce(){
