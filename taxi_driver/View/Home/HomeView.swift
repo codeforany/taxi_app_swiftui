@@ -189,6 +189,9 @@ struct HomeView: View {
                 
             }
         }
+        .fullScreenCover(isPresented: $hVM.showNewRequest, content: {
+            TipRequestView()
+        })
         .alert(isPresented: $hVM.showError) {
             Alert(title: Text(Globs.AppName), message: Text(hVM.errorMessage), dismissButton: .default(Text("Ok")) {
                 

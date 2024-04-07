@@ -9,33 +9,37 @@ import SwiftUI
 import MapKit
 
 struct TipRequestView: View {
-    
-    
-    @State var pickupLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1501)
-    @State var dropLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1701)
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @StateObject var hVM = DriverViewModel.shared
     
     var body: some View {
         ZStack{
             
-            MyMapView(requestLocation: $pickupLocation, destinationLocation: $dropLocation)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            MyMapView(requestLocation: $hVM.pickupLocation, destinationLocation: $hVM.dropLocation)
+                .edgesIgnoringSafeArea(.all)
             
             VStack{
                 
                 HStack {
                     Spacer()
                     
-                    HStack{
-                        Image("close")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
+                    Button(action: {
                         
-                        Text ("No Thanks")
-                            .font(.customfont(.regular, fontSize: 16))
-                            .foregroundColor(Color.primaryText)
+                        hVM.actionDriverRequestDecline()
                         
-                    }
+                    }, label: {
+                        HStack{
+                            Image("close")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                            
+                            Text ("No Thanks")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                            
+                        }
+                    })
                     .frame(width: 120, alignment: .center)
                     .padding(15)
                     .background(Color.white)
@@ -49,7 +53,10 @@ struct TipRequestView: View {
                 
                 VStack{
                     
-                    Text("25 Min")
+                    let time = Double( hVM.newRequestObj.value(forKey: "est_duration") as? String ?? "" ) ?? 0.0
+                    let distance = Double(hVM.newRequestObj.value(forKey: "est_total_distance") as? String ?? "" ) ?? 0.0
+                    
+                    Text("\( time, specifier: "%.0f" ) Min")
                         .font(.customfont(.extraBold, fontSize: 25))
                         .foregroundColor(Color.primaryText)
                         .padding(.horizontal, 20)
@@ -57,12 +64,12 @@ struct TipRequestView: View {
                         .padding(.top, 15)
                     
                     HStack(spacing:0){
-                        Text("$12.50")
+                        Text("$\( hVM.newRequestObj.value(forKey: "amt") ?? "" )")
                             .font(.customfont(.regular, fontSize: 18))
                             .foregroundColor(Color.secondaryText)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                         
-                        Text("4.5 km")
+                        Text("\( distance, specifier: "%.2f" ) km")
                             .font(.customfont(.regular, fontSize: 18))
                             .foregroundColor(Color.secondaryText)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
@@ -90,7 +97,7 @@ struct TipRequestView: View {
                             .frame(width: 10, height: 10)
                             .cornerRadius(5)
                         
-                        Text("1 Ash Park, Pembroke Dock, SA72")
+                        Text(hVM.newRequestObj.value(forKey: "pickup_address") as? String ?? "")
                             .font(.customfont(.regular, fontSize: 15))
                             .foregroundColor(Color.primaryText)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -103,7 +110,7 @@ struct TipRequestView: View {
                             .fill(Color.primaryApp)
                             .frame(width: 10, height: 10)
                         
-                        Text("54 Hollybank Rd, Southampton")
+                        Text(hVM.newRequestObj.value(forKey: "drop_address") as? String ?? "")
                             .font(.customfont(.regular, fontSize: 15))
                             .foregroundColor(Color.primaryText)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -111,8 +118,8 @@ struct TipRequestView: View {
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
                     
-                    NavigationLink {
-                        
+                    Button {
+                        hVM.actionDriverRequestAccept()
                     } label: {
                         ZStack{
                             Text("TAP TO ACCEPT")
@@ -144,6 +151,11 @@ struct TipRequestView: View {
                 .shadow(radius: 3, y: -3)
                 
             }
+        }
+        .alert(isPresented: $hVM.showError) {
+            Alert(title: Text(Globs.AppName), message: Text(hVM.errorMessage), dismissButton: .default(Text("Ok")) {
+                mode.wrappedValue.dismiss()
+            } )
         }
         .navigationTitle("")
         .navigationBarBackButtonHidden()

@@ -46,7 +46,8 @@ struct Globs {
     static let svUpdateLocation = API_URL + "update_location"
     
     static let svDriverOnline = API_URL + "driver_online"
-    
+    static let svDriverRideAccept = API_URL + "ride_request_accept"
+    static let svDriverRideDecline = API_URL + "ride_request_decline"
     
 }
 
