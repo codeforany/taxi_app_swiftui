@@ -28,6 +28,7 @@
 		CB3EB4612AD522FF00C26505 /* ReasonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3EB4602AD522FF00C26505 /* ReasonView.swift */; };
 		CB40BB142B539E5F008FBB1E /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = CB40BB132B539E5F008FBB1E /* SocketIO */; };
 		CB40BB162B539E79008FBB1E /* SocketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB40BB152B539E79008FBB1E /* SocketViewModel.swift */; };
+		CB4388A32BC408280032E5E9 /* DriverRunRideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */; };
 		CB49C9D02B562DAE008568A7 /* SupportUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB49C9CF2B562DAE008568A7 /* SupportUserModel.swift */; };
 		CB49C9D22B563004008568A7 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB49C9D12B563004008568A7 /* MessageModel.swift */; };
 		CB49C9D42B5630A8008568A7 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */; };
@@ -146,6 +147,7 @@
 		CB3EB45E2AD51D0E00C26505 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		CB3EB4602AD522FF00C26505 /* ReasonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonView.swift; sourceTree = "<group>"; };
 		CB40BB152B539E79008FBB1E /* SocketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketViewModel.swift; sourceTree = "<group>"; };
+		CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverRunRideViewModel.swift; sourceTree = "<group>"; };
 		CB49C9CF2B562DAE008568A7 /* SupportUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportUserModel.swift; sourceTree = "<group>"; };
 		CB49C9D12B563004008568A7 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		CB49C9D32B5630A8008568A7 /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				CB4CE6FD2BB9580700A42220 /* UserHomeViewModel.swift */,
 				CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */,
 				CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */,
+				CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 				CB4D82892ADCEDB000CE2AC1 /* VehicleRow.swift in Sources */,
 				CBF901F12AB706A200296488 /* CountryPickerUI.swift in Sources */,
 				CB49C9D22B563004008568A7 /* MessageModel.swift in Sources */,
+				CB4388A32BC408280032E5E9 /* DriverRunRideViewModel.swift in Sources */,
 				CBF901EC2AB703FC00296488 /* MobileNumberView.swift in Sources */,
 				CB8AACE52BBAF661001D6787 /* ZoneModel.swift in Sources */,
 				CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */,

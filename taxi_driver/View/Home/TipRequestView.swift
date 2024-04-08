@@ -14,8 +14,8 @@ struct TipRequestView: View {
     
     var body: some View {
         ZStack{
-            
-            MyMapView(requestLocation: $hVM.pickupLocation, destinationLocation: $hVM.dropLocation)
+                        
+            MyMapView(requestLocation: $hVM.pickupLocation, destinationLocation: $hVM.dropLocation , pickupIcon: .constant("pickup_pin"), dropIcon: .constant("drop_pin"))
                 .edgesIgnoringSafeArea(.all)
             
             VStack{

@@ -49,6 +49,10 @@ struct Globs {
     static let svDriverRideAccept = API_URL + "ride_request_accept"
     static let svDriverRideDecline = API_URL + "ride_request_decline"
     
+    static let svHome = API_URL + "home"
+    static let svDriverWaitUser = API_URL + "driver_wait_user"
+    
+    
 }
 
 struct KKey {

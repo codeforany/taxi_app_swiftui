@@ -12,6 +12,7 @@ import MapKit
 struct HomeView: View {
     
     @StateObject var hVM = DriverViewModel.shared
+    @StateObject var rVM = DriverRunRideViewModel.shared
     @State private var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 40.75773, longitude: -73.985708), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
     
     @State private var isOpen = false
@@ -192,6 +193,12 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $hVM.showNewRequest, content: {
             TipRequestView()
         })
+        .background( NavigationLink(
+            destination: RunTripView(),
+            isActive: $rVM.showRunningRide,
+            label: {
+                EmptyView()
+            }))
         .alert(isPresented: $hVM.showError) {
             Alert(title: Text(Globs.AppName), message: Text(hVM.errorMessage), dismissButton: .default(Text("Ok")) {
                 

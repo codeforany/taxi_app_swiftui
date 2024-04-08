@@ -9,21 +9,17 @@ import SwiftUI
 import MapKit
 
 struct RunTripView: View {
-    @State var pickupLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1501)
-    @State var dropLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1701)
-    @State var isOpen = true
-    @State var showCancel = false
-    @State var showCancelReason = false 
+    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @StateObject var rVM = DriverRunRideViewModel.shared
+    
     @State var rideStatus: Int = 0
     
-    @State var rateUser: Int = 4
-    @State var showToll = false
-    @State var txtToll = ""
     
     var body: some View {
         ZStack{
             
-            MyMapView(requestLocation: $pickupLocation, destinationLocation: $dropLocation)
+            MyMapView(requestLocation: $rVM.pickupLocation, destinationLocation: $rVM.dropLocation, pickupIcon: $rVM.pickUpPinIcon, dropIcon: $rVM.dropPinIcon)
                 .edgesIgnoringSafeArea(.all)
             
             VStack{
@@ -32,12 +28,12 @@ struct RunTripView: View {
                     Spacer()
                     
                     HStack{
-                        Image("pickup_pin_1")
+                        Image(rVM.displayAddressIcon)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 40, height: 40)
                         
-                        Text ("1 Ash Park, Pembroke Dock, SA7254, Drury Lane, Oldham, OL9 7PH")
+                        Text (rVM.displayAddress)
                             .font(.customfont(.regular, fontSize: 16))
                             .foregroundColor(Color.primaryText)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -55,7 +51,9 @@ struct RunTripView: View {
                 
                 Spacer()
                 
-                if(rideStatus == 1 || rideStatus == 2) {
+                let rideStatusId = rVM.rideObj.value(forKey: "booking_status") as? Int ?? 0
+                
+                if(rideStatusId == BStatus.bsWaitUser || rideStatusId == BStatus.bsStart) {
                     
                
                 HStack {
@@ -66,7 +64,7 @@ struct RunTripView: View {
                             .font(.customfont(.extraBold, fontSize: 25))
                             .foregroundColor(.secondaryApp)
                         
-                        Text( rideStatus == 1 ?  "Waiting for rider" : "Arrived at dropoff")
+                        Text( rideStatusId == BStatus.bsWaitUser ?  "Waiting for rider" : "Arrived at dropoff")
                             .font(.customfont(.regular, fontSize: 16))
                             .foregroundColor(.secondaryText)
                         
@@ -101,9 +99,9 @@ struct RunTripView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 30, height: 30)
-                                        .foregroundColor( i <= rateUser ? Color.orange : Color.lightGray )
+                                        .foregroundColor( i <= rVM.rateUser ? Color.orange : Color.lightGray )
                                         .onTapGesture {
-                                            rateUser = i
+                                            rVM.rateUser = i
                                         }
                                         
                                 }
@@ -129,10 +127,10 @@ struct RunTripView: View {
                         HStack {
                             Button(action: {
                                 withAnimation {
-                                    isOpen.toggle()
+                                    rVM.isOpen.toggle()
                                 }
                             }, label: {
-                                Image( !isOpen ? "open_btn" : "close_btn")
+                                Image( !rVM.isOpen ? "open_btn" : "close_btn")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20)
@@ -143,7 +141,7 @@ struct RunTripView: View {
                                     .frame(height: 10)
                                 
                                 HStack{
-                                    Text("25 Min")
+                                    Text("\( rVM.estDuration, specifier: "%.0f" ) Min")
                                         .font(.customfont(.extraBold, fontSize: 18))
                                         .foregroundColor(Color.primaryText)
                                     
@@ -152,12 +150,12 @@ struct RunTripView: View {
                                         .scaledToFit()
                                         .frame(width:30)
                                     
-                                    Text("0.5 mi")
+                                    Text("\( rVM.estDistance, specifier: "%.0f" ) KM")
                                         .font(.customfont(.extraBold, fontSize: 18))
                                         .foregroundColor(Color.primaryText)
                                 }
                                 
-                                Text("Picking uo James smith")
+                                Text(rVM.rideStatusName)
                                     .font(.customfont(.regular, fontSize: 16))
                                     .foregroundColor(Color.secondaryText)
                             }
@@ -174,7 +172,7 @@ struct RunTripView: View {
                         }
                         .padding(.horizontal, 20)
                         
-                        if(isOpen) {
+                        if(rVM.isOpen) {
                             Divider()
                             
                             HStack(spacing:0){
@@ -205,7 +203,7 @@ struct RunTripView: View {
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                                 
                                 Button {
-                                    showCancel = true
+                                    rVM.showCancel = true
                                 } label: {
                                     VStack(spacing: 0){
                                         Image("cancel_trip")
@@ -231,14 +229,10 @@ struct RunTripView: View {
                      
                         
                         Button {
-                            if(rideStatus == 2) {
-                                showToll = true
-                            }else{
-                                rideStatus += 1
-                            }
+                            rVM.actionStatusChange()
                             
                         } label: {
-                            Text( rideStatus == 0 ? "ARRIVED" : rideStatus == 1 ? "START" : rideStatus == 2 ? "COMPLETE" : "" )
+                            Text( rVM.btnName )
                                 .font(.customfont(.regular, fontSize: 16))
                                 .foregroundColor(Color.white)
                         }
@@ -256,7 +250,7 @@ struct RunTripView: View {
                 
             }
         }
-        .fullScreenCover(isPresented: $showCancel, content: {
+        .fullScreenCover(isPresented: $rVM.showCancel, content: {
             ZStack {
                 
                 VisualEffectView(blurRadius: 15)
@@ -276,8 +270,8 @@ struct RunTripView: View {
                         Divider()
                         
                         Button {
-                            self.showCancelReason = true
-                            self.showCancel = false
+                            rVM.showCancelReason = true
+                            rVM.showCancel = false
                         } label: {
                             Text("YES, CANCEL")
                                 .font(.customfont(.regular, fontSize: 16))
@@ -290,7 +284,7 @@ struct RunTripView: View {
                         .padding(.top)
                         
                         Button {
-                            self.showCancel = false
+                            rVM.showCancel = false
                         } label: {
                             Text("NO")
                                 .font(.customfont(.regular, fontSize: 16))
@@ -310,7 +304,7 @@ struct RunTripView: View {
             
             .background(BackgroundCleanerView())
         })
-        .fullScreenCover(isPresented: $showToll, content: {
+        .fullScreenCover(isPresented: $rVM.showToll, content: {
             ZStack {
                 
                 VisualEffectView(blurRadius: 15)
@@ -336,7 +330,7 @@ struct RunTripView: View {
                                 .font(.customfont(.regular, fontSize: 16))
                                 .foregroundColor(Color.primaryText)
                             
-                            TextField("", text: $txtToll)
+                            TextField("", text: $rVM.txtToll)
                         }
                         
                         Divider()
@@ -345,7 +339,7 @@ struct RunTripView: View {
                             Spacer()
                             Button {
                                 self.rideStatus = 3
-                                self.showToll = false
+                                rVM.showToll = false
                             } label: {
                                 Text("CANCEL")
                                     .font(.customfont(.regular, fontSize: 16))
@@ -353,8 +347,8 @@ struct RunTripView: View {
                             }
                             
                             Button {
-                                self.rideStatus = 3
-                                self.showToll = false
+                                rideStatus = 3
+                                rVM.showToll = false
                             } label: {
                                 Text("DONE")
                                     .font(.customfont(.regular, fontSize: 16))
@@ -377,11 +371,16 @@ struct RunTripView: View {
             .background(BackgroundCleanerView())
             .ignoresSafeArea()
         })
-        .fullScreenCover(isPresented: $showCancelReason, content: {
+        .fullScreenCover(isPresented: $rVM.showCancelReason, content: {
             ReasonView()
                 .background(Color.white)
                 .ignoresSafeArea()
         })
+        .alert(isPresented: $rVM.showError){
+            Alert(title: Text(Globs.AppName), message: Text(rVM.errorMessage), dismissButton: .default(Text("Ok")) {
+                
+            } )
+        }
         .navigationTitle("")
         .navigationBarBackButtonHidden()
         .navigationBarHidden(true)

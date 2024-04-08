@@ -13,6 +13,9 @@ struct MyMapView: UIViewRepresentable {
     
     @Binding var requestLocation: CLLocationCoordinate2D
     @Binding var destinationLocation: CLLocationCoordinate2D
+    @Binding var pickupIcon: String
+    @Binding  var dropIcon: String
+    
     var bottomPadding: Double = 300.0
    
     
@@ -20,10 +23,20 @@ struct MyMapView: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<MyMapView>) -> WrappableMapView {
         mapView.delegate = mapView
+        mapView.pickUpIconName = pickupIcon
+        mapView.dropOffIconName = dropIcon
         return mapView
     }
     
     func updateUIView(_ uiView: WrappableMapView, context: UIViewRepresentableContext<MyMapView>) {
+        
+        
+        uiView.pickUpIconName = pickupIcon
+        uiView.dropOffIconName = dropIcon
+        
+        //Clean Map
+        uiView.removeOverlays(uiView.overlays)
+        uiView.removeAnnotations(uiView.annotations)
         
         // Draw Pickup Pin
         let requestAnnotation = MKPointAnnotation()
@@ -75,6 +88,9 @@ struct MyMapView: UIViewRepresentable {
 
 class WrappableMapView: MKMapView, MKMapViewDelegate {
     
+    var pickUpIconName = "pickup_pin"
+    var dropOffIconName = "drop_pin"
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = Color.primaryText.uiColor()
@@ -97,9 +113,9 @@ class WrappableMapView: MKMapView, MKMapViewDelegate {
         
         switch annotation.title {
         case "pickup":
-            annotationView?.image = UIImage(named: "pickup_pin")
+            annotationView?.image = UIImage(named: pickUpIconName)
         case "dropoff":
-            annotationView?.image = UIImage(named: "drop_pin")
+            annotationView?.image = UIImage(named: dropOffIconName)
         default:
             break
         }
