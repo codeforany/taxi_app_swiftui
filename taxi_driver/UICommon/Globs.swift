@@ -52,6 +52,8 @@ struct Globs {
     static let svHome = API_URL + "home"
     static let svDriverWaitUser = API_URL + "driver_wait_user"
     
+    static let svRideStart = API_URL + "ride_start"
+    
     
 }
 

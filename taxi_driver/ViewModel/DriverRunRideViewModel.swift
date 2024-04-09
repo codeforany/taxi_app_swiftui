@@ -40,6 +40,9 @@ class DriverRunRideViewModel: ObservableObject {
     @Published var showToll = false
     @Published var txtToll = ""
     
+    @Published var showOTP = false
+    @Published var txtOTP = ""
+    
     @Published var showError = false
     @Published var errorMessage = ""
     
@@ -66,7 +69,28 @@ class DriverRunRideViewModel: ObservableObject {
         
         if(rideStatusId == BStatus.bsGoUser) {
             apiDriverWaituser(parameter: ["booking_id": self.rideObj.value(forKey: "booking_id") ?? "" ])
-        }else{
+        }else if rideStatusId == BStatus.bsWaitUser{
+            
+            if(!showOTP) {
+                showOTP = true
+                return
+            }
+            
+            if (txtOTP.count != 4) {
+                errorMessage = "Please enter valid OTP"
+                showError  = true
+                return
+            }
+            
+            let lastLocation = LocationManagerViewModel.shared.location
+            
+            apiDriverRideStart(parameter: [
+                "booking_id": self.rideObj.value(forKey: "booking_id")  ?? "",
+                "pickup_latitude": lastLocation.coordinate.latitude,
+                "pickup_longitude": lastLocation.coordinate.longitude,
+                "otp_code": txtOTP
+            ], loc: lastLocation)
+            
             
         }
         
@@ -101,6 +125,36 @@ class DriverRunRideViewModel: ObservableObject {
                     
                     self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
                     self.showError = true
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+            }
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+    }
+    
+    func apiDriverRideStart(parameter: NSDictionary, loc: CLLocation) {
+            
+        ServiceCall.post(parameter: parameter, path: Globs.svRideStart, isTokenApi: true) { responseObj in
+            if let responseObj = responseObj {
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    let payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                    
+                    self.setRideData(obj: payloadObj)
+                    
+                    self.showOTP = false
+                    self.txtOTP = ""
+                    
+                    LocationManagerViewModel.shared.startRideLocationSave(loc: loc, bookingId: self.rideObj.value(forKey: "booking_id") as? Int ?? 0)
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                        self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                        self.showError = true
+                    }
                 }else{
                     self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
                     self.showError = true

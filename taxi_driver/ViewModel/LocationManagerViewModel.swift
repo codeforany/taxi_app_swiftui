@@ -17,6 +17,9 @@ class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDel
     @Published var location: CLLocation = CLLocation(latitude: 0, longitude: 0)
     @Published var degree: Double = 0.0
     
+    var isSaveFileLocation = false
+    var bookingId: Int = 0
+    
     
     override init() {
         super.init()
@@ -70,6 +73,11 @@ class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDel
             debugPrint(" Update Speed : \( self.speed() ) ")
             
             if( MainViewModel.shard.userlogin && ServiceCall.userType == 2 ) {
+                
+                if(isSaveFileLocation && bookingId != 0) {
+                    writeLocationToFile(loc: location, bookingId: bookingId)
+                }
+                
                 apiDriverUpdateLocation(parameter: ["latitude": self.location.coordinate.latitude ,"longitude": self.location.coordinate.longitude,"socket_id": SocketViewModel.shared.socket.sid ?? ""] )
             }
         }
@@ -113,6 +121,69 @@ class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDel
         }
 
         
+    }
+    
+    //MARK: Location Save In File
+    func writeLocationToFile(loc: CLLocation, bookingId: Int) {
+        
+        do {
+            if let file = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                let filePath = file.appendingPathComponent("\(bookingId).txt")
+                
+                print("File Save: \( filePath.path )")
+                
+                if FileManager.default.fileExists(atPath: filePath.path) {
+                    //Append Text Inside File
+                    
+                    let fileHandle = try FileHandle(forWritingTo: filePath)
+                    fileHandle.seekToEndOfFile()
+                    fileHandle.write(",{\"latitude\":\( loc.coordinate.latitude ),\"longitude\":\(loc.coordinate.longitude),\"time\":\"\( Date().string )\"}".data(using: .utf8)!)
+                    fileHandle.closeFile()
+                    
+                }else{
+                    //New File Create
+                    try "{\"latitude\":\( loc.coordinate.latitude ),\"longitude\":\(loc.coordinate.longitude),\"time\":\"\( Date().string )\"}".data(using: .utf8)!.write(to: filePath)
+                }
+            }
+        }
+        catch {
+            print ("\(bookingId).txt File Save Error: \( error.localizedDescription )")
+        }
+        
+    }
+    
+    func getRideSaveLocationJsonString(bookingId: Int) -> String {
+        do {
+            if let file = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+                let filePath = file.appendingPathComponent("\(bookingId).txt")
+                
+                print("File Save: \( filePath.path )")
+                
+                if FileManager.default.fileExists(atPath: filePath.path) {
+                    let text = try String(contentsOfFile: filePath.path, encoding: .utf8 )
+                    return "[\(text)]"
+                }else{
+                    return "[]"
+                }
+            }else{
+                return "[]"
+            }
+        }
+        catch {
+            print ("\(bookingId).txt File Read Error: \( error.localizedDescription )")
+            return "[]"
+        }
+    }
+    
+    func startRideLocationSave(loc: CLLocation, bookingId: Int) {
+        self.writeLocationToFile(loc: loc, bookingId: bookingId)
+        self.bookingId = bookingId
+        self.isSaveFileLocation = true
+    }
+    
+    func stopRideLocationSave(){
+        self.bookingId = 0
+        self.isSaveFileLocation = false
     }
     
 }

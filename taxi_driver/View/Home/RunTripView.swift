@@ -371,6 +371,72 @@ struct RunTripView: View {
             .background(BackgroundCleanerView())
             .ignoresSafeArea()
         })
+        .fullScreenCover(isPresented: $rVM.showOTP, content: {
+            ZStack {
+                
+                VisualEffectView(blurRadius: 15)
+                    .ignoresSafeArea()
+                    .offset(y: -3)
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text("OTP")
+                            .font(.customfont(.extraBold, fontSize: 18))
+                            .foregroundColor(Color.primaryText)
+                        
+                        Text("Please enter otp")
+                            .font(.customfont(.regular, fontSize: 14))
+                            .foregroundColor(Color.secondaryText)
+                            .padding(.top, 1)
+                        
+                      
+                            
+                            TextField("", text: $rVM.txtOTP)
+                      
+                        
+                        Divider()
+                        
+                        HStack(spacing: 20) {
+                            Spacer()
+                            Button {
+                                rVM.showOTP = false
+                            } label: {
+                                Text("CANCEL")
+                                    .font(.customfont(.regular, fontSize: 16))
+                                    .foregroundColor(Color.primaryApp)
+                            }
+                            
+                            Button {
+                                rVM.actionStatusChange()
+                            } label: {
+                                Text("DONE")
+                                    .font(.customfont(.regular, fontSize: 16))
+                                    .foregroundColor(Color.primaryApp)
+                            }
+                            
+                        }
+                        
+                    }
+                    .padding(20)
+                    .background(Color.white )
+                    .cornerRadius(10)
+                    .shadow(radius: 2, y: -3)
+                    .padding(15)
+                    
+                    Spacer()
+                }
+            }
+            .alert(isPresented: $rVM.showError){
+                Alert(title: Text(Globs.AppName), message: Text(rVM.errorMessage), dismissButton: .default(Text("Ok")) {
+                    
+                } )
+            }
+            .background(BackgroundCleanerView())
+            .ignoresSafeArea()
+        })
         .fullScreenCover(isPresented: $rVM.showCancelReason, content: {
             ReasonView()
                 .background(Color.white)
