@@ -58,11 +58,20 @@ class DriverRunRideViewModel: ObservableObject {
     @Published var estDistance = 0.0
     @Published var btnName = ""
     
+    @Published var isAlertOkBack = false
+    
     init() {
         apiHome()
     }
     
     //MARK: Action
+    func actionDriverRideCancel(){
+        apiDriverRideCancel(parameter: [
+            "booking_id" : self.rideObj.value(forKey: "booking_id") ?? "",
+            "booking_status": self.rideObj.value(forKey: "booking_status") ?? ""
+        ])
+    }
+    
     func actionStatusChange(){
             
         let rideStatusId = rideObj.value(forKey: "booking_status") as? Int ?? 0
@@ -91,6 +100,24 @@ class DriverRunRideViewModel: ObservableObject {
                 "otp_code": txtOTP
             ], loc: lastLocation)
             
+            
+        }else if ( rideStatusId == BStatus.bsStart ) {
+                
+            if(!showToll) {
+                showToll = true
+                return
+            }
+            
+            let lastLocation = LocationManagerViewModel.shared.location
+            LocationManagerViewModel.shared.stopRideLocationSave()
+            
+            apiDriverRideStop(parameter: [
+                "booking_id" :  self.rideObj.value(forKey: "booking_id") ?? "",
+                "drop_latitude" : lastLocation.coordinate.latitude,
+                "drop_longitude" : lastLocation.coordinate.longitude,
+                "ride_location": LocationManagerViewModel.shared.getRideSaveLocationJsonString(bookingId: self.rideObj.value(forKey: "booking_id") as? Int ??  0 ),
+                "toll_tax" : txtToll == "" ? "0" : txtToll
+            ])
             
         }
         
@@ -164,6 +191,57 @@ class DriverRunRideViewModel: ObservableObject {
             self.errorMessage = error?.localizedDescription ?? MSG.fail
             self.showError = true
         }
+    }
+    
+    func apiDriverRideStop(parameter: NSDictionary) {
+            
+        ServiceCall.post(parameter: parameter, path: Globs.svRideStop, isTokenApi: true) { responseObj in
+            if let responseObj = responseObj {
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    let payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                    
+                    self.setRideData(obj: payloadObj)
+                    
+                    self.showToll = false
+                    self.txtToll = ""
+                    
+                   
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                        self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                        self.showError = true
+                    }
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+            }
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+    }
+    
+    func  apiDriverRideCancel(parameter: NSDictionary) {
+            
+        ServiceCall.post(parameter: parameter, path: Globs.svDriverRideCancel, isTokenApi: true) { responseObj in
+            
+            if let responseObj = responseObj {
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    self.isAlertOkBack = true
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                    self.showError = true
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+            }
+            
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+
+        
     }
     
     func setRideData(obj: NSDictionary) {

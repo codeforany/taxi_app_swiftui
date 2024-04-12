@@ -80,7 +80,7 @@ struct RunTripView: View {
                 
                 VStack{
                     
-                    if(rideStatus == 3) {
+                    if(rideStatusId == BStatus.bsComplete) {
                         VStack {
                             Text("How was your rider?")
                                 .font(.customfont(.regular, fontSize: 18))
@@ -88,7 +88,7 @@ struct RunTripView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .padding(.vertical, 15)
                             
-                            Text("Rockdean")
+                            Text("\( rVM.rideObj.value(forKey: "name") as? String ?? "" )")
                                 .font(.customfont(.extraBold, fontSize: 25))
                                 .foregroundColor(.primaryText)
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -262,7 +262,7 @@ struct RunTripView: View {
                     Spacer()
                     
                     VStack {
-                        Text("Cancel Rickdean's trip?")
+                        Text("Cancel \(rVM.rideObj.value(forKey: "name") ?? "")'s trip?")
                             .font(.customfont(.extraBold, fontSize: 18))
                             .foregroundColor(Color.primaryText)
                             .padding(.top, 15)
@@ -270,8 +270,7 @@ struct RunTripView: View {
                         Divider()
                         
                         Button {
-                            rVM.showCancelReason = true
-                            rVM.showCancel = false
+                            rVM.actionDriverRideCancel()
                         } label: {
                             Text("YES, CANCEL")
                                 .font(.customfont(.regular, fontSize: 16))
@@ -301,7 +300,14 @@ struct RunTripView: View {
                     .shadow(radius: 2, y: -3)
                 }
             }
-            
+            .alert(isPresented: $rVM.showError){
+                Alert(title: Text(Globs.AppName), message: Text(rVM.errorMessage), dismissButton: .default(Text("Ok")) {
+                    if(rVM.isAlertOkBack) {
+                        rVM.isAlertOkBack = false
+                        rVM.showRunningRide = false
+                    }
+                } )
+            }
             .background(BackgroundCleanerView())
         })
         .fullScreenCover(isPresented: $rVM.showToll, content: {
@@ -338,7 +344,6 @@ struct RunTripView: View {
                         HStack(spacing: 20) {
                             Spacer()
                             Button {
-                                self.rideStatus = 3
                                 rVM.showToll = false
                             } label: {
                                 Text("CANCEL")
@@ -347,8 +352,8 @@ struct RunTripView: View {
                             }
                             
                             Button {
-                                rideStatus = 3
-                                rVM.showToll = false
+                               
+                                rVM.actionStatusChange()
                             } label: {
                                 Text("DONE")
                                     .font(.customfont(.regular, fontSize: 16))
