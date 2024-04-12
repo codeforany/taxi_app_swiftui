@@ -96,8 +96,17 @@ class DriverViewModel: ObservableObject {
                 if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
                     
                     
-                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
-                    self.showError = true
+                    if( serviceName == Globs.svDriverRideAccept ) {
+                        DriverViewModel.shared.showNewRequest = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            DriverRunRideViewModel.shared.apiHome()
+                        }
+                    }else{
+                        self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                        self.showError = true
+                    }
+                    
+                    
                 }else{
                     self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
                     self.showError = true

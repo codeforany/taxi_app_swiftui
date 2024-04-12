@@ -56,6 +56,7 @@ struct Globs {
     static let svRideStop = API_URL + "ride_stop"
     
     static let svDriverRideCancel = API_URL + "driver_cancel_ride"
+    static let svUserRideCancel = API_URL + "user_cancel_ride"
     
     
 }

@@ -13,7 +13,7 @@ import SDWebImageSwiftUI
 struct UserHomeView: View {
     
     @StateObject var uVM = UserHomeViewModel.shared
-    
+    @StateObject var rVM = UserRunRideViewModel.shared
     
     var body: some View {
         ZStack{
@@ -302,6 +302,12 @@ struct UserHomeView: View {
                 })
             })
         })
+        .background( NavigationLink(
+            destination: UserRunTipView(),
+            isActive: $rVM.showRunningRide,
+            label: {
+                EmptyView()
+            }))
         .alert(isPresented: $uVM.showError, content: {
             
             Alert(title: Text(Globs.AppName), message: Text( uVM.errorMessage ), dismissButton: .default(Text("Ok")) {

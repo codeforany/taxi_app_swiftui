@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB0162862BC8F79700983BB5 /* UserRunRideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0162852BC8F79700983BB5 /* UserRunRideViewModel.swift */; };
+		CB0162882BC8F9CE00983BB5 /* UserRunTipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0162872BC8F9CE00983BB5 /* UserRunTipView.swift */; };
 		CB04A7632B3E752900FDDEAE /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04A7622B3E752900FDDEAE /* ProfileImageView.swift */; };
 		CB04A7652B3E772C00FDDEAE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04A7642B3E772C00FDDEAE /* ImagePicker.swift */; };
 		CB04BEC92ADF836C008AADA9 /* MyRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB04BEC82ADF836C008AADA9 /* MyRatingView.swift */; };
@@ -129,6 +131,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB0162852BC8F79700983BB5 /* UserRunRideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRunRideViewModel.swift; sourceTree = "<group>"; };
+		CB0162872BC8F9CE00983BB5 /* UserRunTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRunTipView.swift; sourceTree = "<group>"; };
 		CB04A7622B3E752900FDDEAE /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		CB04A7642B3E772C00FDDEAE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		CB04BEC82ADF836C008AADA9 /* MyRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRatingView.swift; sourceTree = "<group>"; };
@@ -304,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				CB8678742B5B76BF008322D5 /* UserHomeView.swift */,
+				CB0162872BC8F9CE00983BB5 /* UserRunTipView.swift */,
 			);
 			path = UserHome;
 			sourceTree = "<group>";
@@ -321,6 +326,7 @@
 				CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */,
 				CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */,
 				CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */,
+				CB0162852BC8F79700983BB5 /* UserRunRideViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -608,6 +614,7 @@
 				CB4D82832ADCEB0100CE2AC1 /* SettingsView.swift in Sources */,
 				CB341BAC2BBD0AAC0093D421 /* RoadManager.swift in Sources */,
 				CB3EB4612AD522FF00C26505 /* ReasonView.swift in Sources */,
+				CB0162882BC8F9CE00983BB5 /* UserRunTipView.swift in Sources */,
 				CBE5452A2B3FE5A100446969 /* MainViewModel.swift in Sources */,
 				CB5074672ABABD8500B4C834 /* AddVehicleView.swift in Sources */,
 				CBE8DC7C2AD7B7910042DDDE /* TitleSubtitleRow.swift in Sources */,
@@ -635,6 +642,7 @@
 				CBFE45EE2AB81A7F00751656 /* OTPTextField.swift in Sources */,
 				CB4D82892ADCEDB000CE2AC1 /* VehicleRow.swift in Sources */,
 				CBF901F12AB706A200296488 /* CountryPickerUI.swift in Sources */,
+				CB0162862BC8F79700983BB5 /* UserRunRideViewModel.swift in Sources */,
 				CB49C9D22B563004008568A7 /* MessageModel.swift in Sources */,
 				CB4388A32BC408280032E5E9 /* DriverRunRideViewModel.swift in Sources */,
 				CBF901EC2AB703FC00296488 /* MobileNumberView.swift in Sources */,

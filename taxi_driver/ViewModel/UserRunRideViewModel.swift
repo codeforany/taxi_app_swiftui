@@ -1,27 +1,18 @@
 //
-//  DriverRunRideViewModel.swift
+//  UserRunRideViewModel.swift
 //  taxi_driver
 //
-//  Created by CodeForAny on 08/04/24.
+//  Created by CodeForAny on 12/04/24.
 //
 
 import SwiftUI
+
 import MapKit
 
-class BStatus {
-    static var bsPending = 0
-    static var bsAccept = 1
-    static var bsGoUser = 2
-    static var bsWaitUser = 3
-    static var bsStart = 4
-    static var bsComplete = 5
-    static var bsCancel = 6
-    static var bsDriverNotFound = 7
-}
 
-class DriverRunRideViewModel: ObservableObject {
+class UserRunRideViewModel: ObservableObject {
     
-    static var shared = DriverRunRideViewModel()
+    static var shared = UserRunRideViewModel()
     let rm = RoadManager()
     let sVM = SocketViewModel.shared
     
@@ -64,8 +55,21 @@ class DriverRunRideViewModel: ObservableObject {
     init() {
         apiHome()
         
-        sVM.socket.on("user_cancel_ride") { data, ack in
-            print(" socket user_cancel_ride response %@ ", data)
+        sVM.socket.on("user_request_accept") { data, ack in
+            print(" socket user_request_accept response %@ ", data)
+            
+            if(data.count > 0) {
+                if let resObj = data[0] as? NSDictionary {
+                    if resObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                        
+                        self.apiHome()
+                    }
+                }
+            }
+        }
+        
+        sVM.socket.on("driver_cancel_ride") { data, ack in
+            print(" socket driver_cancel_ride response %@ ", data)
             
             if(data.count > 0) {
                 if let resObj = data[0] as? NSDictionary {
@@ -75,8 +79,27 @@ class DriverRunRideViewModel: ObservableObject {
                             self.showRunningRide = false
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                                DriverViewModel.shared.errorMessage = "User cancel ride"
-                                DriverViewModel.shared.showError = true
+                                UserHomeViewModel.shared.errorMessage = "Driver cancel ride"
+                                UserHomeViewModel.shared.showError = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        sVM.socket.on("driver_wait_user") { data, ack in
+            print(" socket driver_wait_user response %@ ", data)
+            
+            if(data.count > 0) {
+                if let resObj = data[0] as? NSDictionary {
+                    if resObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                        let bObj = resObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                        if bObj.value(forKey: "booking_id") as? Int ?? -1 == self.rideObj.value(forKey: "booking_id") as? Int ?? 0 {
+                            if let tempObj = self.rideObj as? NSMutableDictionary {
+                                tempObj.setValue( bObj.value(forKey: "booking_status") , forKey: "booking_status")
+                                self.setRideData(obj: tempObj)
                             }
                         }
                     }
@@ -87,62 +110,13 @@ class DriverRunRideViewModel: ObservableObject {
     
     //MARK: Action
     func actionDriverRideCancel(){
-        apiDriverRideCancel(parameter: [
+        apiUserRideCancel(parameter: [
             "booking_id" : self.rideObj.value(forKey: "booking_id") ?? "",
             "booking_status": self.rideObj.value(forKey: "booking_status") ?? ""
         ])
     }
     
-    func actionStatusChange(){
-            
-        let rideStatusId = rideObj.value(forKey: "booking_status") as? Int ?? 0
-        
-        if(rideStatusId == BStatus.bsGoUser) {
-            apiDriverWaituser(parameter: ["booking_id": self.rideObj.value(forKey: "booking_id") ?? "" ])
-        }else if rideStatusId == BStatus.bsWaitUser{
-            
-            if(!showOTP) {
-                showOTP = true
-                return
-            }
-            
-            if (txtOTP.count != 4) {
-                errorMessage = "Please enter valid OTP"
-                showError  = true
-                return
-            }
-            
-            let lastLocation = LocationManagerViewModel.shared.location
-            
-            apiDriverRideStart(parameter: [
-                "booking_id": self.rideObj.value(forKey: "booking_id")  ?? "",
-                "pickup_latitude": lastLocation.coordinate.latitude,
-                "pickup_longitude": lastLocation.coordinate.longitude,
-                "otp_code": txtOTP
-            ], loc: lastLocation)
-            
-            
-        }else if ( rideStatusId == BStatus.bsStart ) {
-                
-            if(!showToll) {
-                showToll = true
-                return
-            }
-            
-            let lastLocation = LocationManagerViewModel.shared.location
-            LocationManagerViewModel.shared.stopRideLocationSave()
-            
-            apiDriverRideStop(parameter: [
-                "booking_id" :  self.rideObj.value(forKey: "booking_id") ?? "",
-                "drop_latitude" : lastLocation.coordinate.latitude,
-                "drop_longitude" : lastLocation.coordinate.longitude,
-                "ride_location": LocationManagerViewModel.shared.getRideSaveLocationJsonString(bookingId: self.rideObj.value(forKey: "booking_id") as? Int ??  0 ),
-                "toll_tax" : txtToll == "" ? "0" : txtToll
-            ])
-            
-        }
-        
-    }
+   
     
     //MARK: ApiCalling
     func apiHome() {
@@ -163,88 +137,11 @@ class DriverRunRideViewModel: ObservableObject {
         }
     }
     
-    func apiDriverWaituser(parameter: NSDictionary) {
-            
-        ServiceCall.post(parameter: parameter, path: Globs.svDriverWaitUser, isTokenApi: true) { responseObj in
-            if let responseObj = responseObj {
-                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
-                    let payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
-                    self.setRideData(obj: payloadObj)
-                    
-                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
-                    self.showError = true
-                }else{
-                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
-                    self.showError = true
-                }
-            }
-        } failure: { error in
-            self.errorMessage = error?.localizedDescription ?? MSG.fail
-            self.showError = true
-        }
-    }
     
-    func apiDriverRideStart(parameter: NSDictionary, loc: CLLocation) {
-            
-        ServiceCall.post(parameter: parameter, path: Globs.svRideStart, isTokenApi: true) { responseObj in
-            if let responseObj = responseObj {
-                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
-                    let payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
-                    
-                    self.setRideData(obj: payloadObj)
-                    
-                    self.showOTP = false
-                    self.txtOTP = ""
-                    
-                    LocationManagerViewModel.shared.startRideLocationSave(loc: loc, bookingId: self.rideObj.value(forKey: "booking_id") as? Int ?? 0)
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                        self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
-                        self.showError = true
-                    }
-                }else{
-                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
-                    self.showError = true
-                }
-            }
-        } failure: { error in
-            self.errorMessage = error?.localizedDescription ?? MSG.fail
-            self.showError = true
-        }
-    }
     
-    func apiDriverRideStop(parameter: NSDictionary) {
+    func  apiUserRideCancel(parameter: NSDictionary) {
             
-        ServiceCall.post(parameter: parameter, path: Globs.svRideStop, isTokenApi: true) { responseObj in
-            if let responseObj = responseObj {
-                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
-                    let payloadObj = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
-                    
-                    self.setRideData(obj: payloadObj)
-                    
-                    self.showToll = false
-                    self.txtToll = ""
-                    
-                   
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                        self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
-                        self.showError = true
-                    }
-                }else{
-                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
-                    self.showError = true
-                }
-            }
-        } failure: { error in
-            self.errorMessage = error?.localizedDescription ?? MSG.fail
-            self.showError = true
-        }
-    }
-    
-    func  apiDriverRideCancel(parameter: NSDictionary) {
-            
-        ServiceCall.post(parameter: parameter, path: Globs.svDriverRideCancel, isTokenApi: true) { responseObj in
+        ServiceCall.post(parameter: parameter, path: Globs.svUserRideCancel, isTokenApi: true) { responseObj in
             
             if let responseObj = responseObj {
                 if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
@@ -291,7 +188,7 @@ class DriverRunRideViewModel: ObservableObject {
             pickUpPinIcon = "target"
             dropPinIcon = "pickup_pin"
             
-            pickupLocation = CLLocationCoordinate2D(latitude: LocationManagerViewModel.shared.location.coordinate.latitude , longitude:  LocationManagerViewModel.shared.location.coordinate.longitude)
+            pickupLocation = CLLocationCoordinate2D(latitude: Double( rideObj.value(forKey: "lati") as? String ?? "0.0" ) ?? 0.0  , longitude:  Double( rideObj.value(forKey: "longi") as? String ?? "0.0" ) ?? 0.0 )
             
             dropLocation = CLLocationCoordinate2D(latitude: Double( rideObj.value(forKey: "pickup_lat") as? String ?? "0.0" ) ?? 0.0 , longitude: Double( rideObj.value(forKey: "pickup_long") as? String ?? "0.0" ) ?? 0.0)
             
@@ -317,7 +214,7 @@ class DriverRunRideViewModel: ObservableObject {
             pickUpPinIcon = "target"
             dropPinIcon = "drop_pin"
             
-            pickupLocation = CLLocationCoordinate2D(latitude: LocationManagerViewModel.shared.location.coordinate.latitude , longitude:  LocationManagerViewModel.shared.location.coordinate.longitude)
+            pickupLocation = CLLocationCoordinate2D(latitude: Double( rideObj.value(forKey: "lati") as? String ?? "0.0" ) ?? 0.0  , longitude:  Double( rideObj.value(forKey: "longi") as? String ?? "0.0" ) ?? 0.0 )
             
             dropLocation = CLLocationCoordinate2D(latitude: Double( rideObj.value(forKey: "drop_lat") as? String ?? "0.0" ) ?? 0.0 , longitude: Double( rideObj.value(forKey: "drop_long") as? String ?? "0.0" ) ?? 0.0)
             
@@ -345,17 +242,19 @@ class DriverRunRideViewModel: ObservableObject {
             
         switch rideObj.value(forKey: "booking_status")  as? Int ?? 0 {
         case 2:
-            return "Pickup Up \( rideObj.value(forKey: "name") ?? "" )"
+            return "On Way Driver \( rideObj.value(forKey: "name") ?? "" )"
         case 3:
-            return "Waiting For \( rideObj.value(forKey: "name") ?? "" )"
+            return "Waiting Driver \( rideObj.value(forKey: "name") ?? "" )"
         case 4:
             return "Ride Started With \( rideObj.value(forKey: "name") ?? "" )"
         case 5:
             return "Ride Complete With \( rideObj.value(forKey: "name") ?? "" )"
         case 6:
             return "Ride Cancel \( rideObj.value(forKey: "name") ?? "" )"
+        case 7:
+            return "No Driver Found"
         default:
-            return             "Finding Driver Near By"
+            return "Finding Driver Near By"
         }
         
     }

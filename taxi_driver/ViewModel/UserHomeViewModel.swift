@@ -52,24 +52,12 @@ class UserHomeViewModel : ObservableObject {
     
     @Published var activeZoneArr: [ZoneModel] = []
     
-    var sVM = SocketViewModel.shared
+    
     
     init(){
         setupRegionDebounce()
         activeZoneArr = DBHelper.shared.getActiveZone()
-        sVM.socket.on("user_request_accept") { data, ack in
-            print(" socket user_request_accept response %@ ", data)
-            
-            if(data.count > 0) {
-                if let resObj = data[0] as? NSDictionary {
-                    if resObj.value(forKey: KKey.status) as? String ?? "" == "1" {
-                        
-                        self.errorMessage = resObj.value(forKey: KKey.message) as? String ?? MSG.success
-                        self.showError = true
-                    }
-                }
-            }
-        }
+        
     }
     
     func setupRegionDebounce(){
