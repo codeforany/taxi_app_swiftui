@@ -7,12 +7,14 @@
 
 import SwiftUI
 import MapKit
+import SDWebImageSwiftUI
 
 
 struct UserRunTipView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @StateObject var rVM = UserRunRideViewModel.shared
+    @StateObject var sVM = SupportViewModel.shared
     
     
     var body: some View {
@@ -144,10 +146,12 @@ struct UserRunTipView: View {
                                         .font(.customfont(.extraBold, fontSize: 18))
                                         .foregroundColor(Color.primaryText)
                                     
-                                    Image(  "ride_user_profile")
+                                    WebImage(url: URL(string: rVM.rideObj.value(forKey: "image") as? String ?? "" ))
                                         .resizable()
+                                        .indicator(.activity)
                                         .scaledToFit()
                                         .frame(width:30)
+                                        .cornerRadius(15)
                                     
                                     Text("\( rVM.estDistance, specifier: "%.0f" ) KM")
                                         .font(.customfont(.extraBold, fontSize: 18))
@@ -172,20 +176,110 @@ struct UserRunTipView: View {
                         .padding(.horizontal, 20)
                         
                         if(rVM.isOpen) {
+                                
+                            Divider()
+                            HStack(spacing: 15){
+                                
+                                WebImage(url: URL(string: rVM.rideObj.value(forKey: "image") as? String ?? "" ))
+                                    .resizable()
+                                    .indicator(.activity)
+                                    .scaledToFit()
+                                    .frame(width:50, height: 50)
+                                    .cornerRadius(25)
+                                
+                                VStack{
+                                    
+                                    HStack{
+                                        Text(rVM.rideObj.value(forKey: "name") as? String ?? "" )
+                                            .font(.customfont(.bold, fontSize: 16))
+                                            .foregroundColor(Color.primaryText)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        
+                                        Text(rVM.rideStatusText )
+                                            .font(.customfont(.bold, fontSize: 17))
+                                            .foregroundColor( rVM.rideStatusColor )
+                                    }
+                                    
+                                    
+                                    HStack{
+                                        Text( "\( rVM.rideObj.value(forKey: "mobile_code") as? String ?? "" ) \(rVM.rideObj.value(forKey: "mobile") as? String ?? "")"  )
+                                            .font(.customfont(.regular, fontSize: 14))
+                                            .foregroundColor(Color.secondaryText)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        
+                                        Text(rVM.rideObj.value(forKey: "payment_type") as? Int ?? 0 == 1 ? "COD" : "Online" )
+                                            .font(.customfont(.bold, fontSize: 17))
+                                            .foregroundColor( .secondaryText)
+                                    }
+                                    
+                                }
+                                
+                            }
+                            .padding(.horizontal, 20)
+                            
+                            Divider()
+                            HStack(spacing: 15){
+                                
+                                WebImage(url: URL(string: rVM.rideObj.value(forKey: "icon") as? String ?? "" ))
+                                    .resizable()
+                                    .indicator(.activity)
+                                    .scaledToFit()
+                                    .frame(width:50, height: 50)
+                                    .cornerRadius(25)
+                                
+                                VStack{
+                                    
+                                    Text("\( rVM.rideObj.value(forKey: "brand_name") as? String ?? "" ) - \(rVM.rideObj.value(forKey: "model_name") as? String ?? "") - \(rVM.rideObj.value(forKey: "series_name") as? String ?? "")"  )
+                                        .font(.customfont(.regular, fontSize: 14))
+                                        .foregroundColor(Color.primaryText)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    HStack{
+                                       
+                                        Text( "No Plat: \( rVM.rideObj.value(forKey: "car_number") as? String ?? "" )"  )
+                                            .font(.customfont(.regular, fontSize: 14))
+                                            .foregroundColor(Color.secondaryText)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        if(rideStatusId == BStatus.bsWaitUser) {
+                                            Text("OTP: \( rVM.rideObj.value(forKey: "otp_code") as? String ?? "" )" )
+                                                .font(.customfont(.bold, fontSize: 14))
+                                                .foregroundColor( Color.secondaryText )
+                                        }
+                                        
+                                    }
+                                }
+                                
+                            }
+                            .padding(.horizontal, 20)
+                            
                             Divider()
                             
                             HStack(spacing:0){
-                                VStack(spacing: 0){
-                                    Image("chat")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 45)
-                                    
-                                    Text("Chat")
-                                        .font(.customfont(.regular, fontSize: 18))
-                                        .foregroundColor(Color.secondaryText)
+                                
+                                Button {
+                                    sVM.selectSupportUser = SupportUserModel(uObj: [
+                                        "user_id": Int("\( rVM.rideObj.value(forKey: "driver_id") ?? "" )") ?? 0,
+                                        "name":  rVM.rideObj.value(forKey: "name") ?? "",
+                                        "image": rVM.rideObj.value(forKey: "image") ?? ""
+                                    ])
+                                } label: {
+                                    VStack(spacing: 0){
+                                        Image("chat")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 45)
                                         
+                                        Text("Chat")
+                                            .font(.customfont(.regular, fontSize: 18))
+                                            .foregroundColor(Color.secondaryText)
+                                            
+                                    }
                                 }
+
+                               
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
                                 
                                 VStack(spacing: 0){
@@ -294,6 +388,9 @@ struct UserRunTipView: View {
             }
             .background(BackgroundCleanerView())
         })
+        .background( NavigationLink(destination: SupportMessageView(), isActive: $sVM.showMessage,  label: {
+            EmptyView()
+        }) )
         .alert(isPresented: $rVM.showError){
             Alert(title: Text(Globs.AppName), message: Text(rVM.errorMessage), dismissButton: .default(Text("Ok")) {
                 

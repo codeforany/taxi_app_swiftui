@@ -106,6 +106,25 @@ class UserRunRideViewModel: ObservableObject {
                 }
             }
         }
+        
+        
+        sVM.socket.on("ride_start") { data, ack in
+            print(" socket ride_start response %@ ", data)
+            
+            if(data.count > 0) {
+                if let resObj = data[0] as? NSDictionary {
+                    if resObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                        let bObj = resObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                        if bObj.value(forKey: "booking_id") as? Int ?? -1 == self.rideObj.value(forKey: "booking_id") as? Int ?? 0 {
+                            if let tempObj = self.rideObj as? NSMutableDictionary {
+                                tempObj.setValue( bObj.value(forKey: "booking_status") , forKey: "booking_status")
+                                self.setRideData(obj: tempObj)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     //MARK: Action
