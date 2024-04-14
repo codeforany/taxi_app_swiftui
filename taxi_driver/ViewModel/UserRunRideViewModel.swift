@@ -51,6 +51,7 @@ class UserRunRideViewModel: ObservableObject {
     @Published var btnName = ""
     
     @Published var isAlertOkBack = false
+    @Published var showRideComplete = false
     
     init() {
         apiHome()
@@ -107,7 +108,6 @@ class UserRunRideViewModel: ObservableObject {
             }
         }
         
-        
         sVM.socket.on("ride_start") { data, ack in
             print(" socket ride_start response %@ ", data)
             
@@ -119,6 +119,31 @@ class UserRunRideViewModel: ObservableObject {
                             if let tempObj = self.rideObj as? NSMutableDictionary {
                                 tempObj.setValue( bObj.value(forKey: "booking_status") , forKey: "booking_status")
                                 self.setRideData(obj: tempObj)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        sVM.socket.on("ride_stop") { data, ack in
+            print(" socket ride_stop response %@ ", data)
+            
+            if(data.count > 0) {
+                if let resObj = data[0] as? NSDictionary {
+                    if resObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                        let bObj = resObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                        if bObj.value(forKey: "booking_id") as? Int ?? -1 == self.rideObj.value(forKey: "booking_id") as? Int ?? 0 {
+                            if let tempObj = self.rideObj as? NSMutableDictionary {
+                                tempObj.setValue( bObj.value(forKey: "booking_status") , forKey: "booking_status")
+                                tempObj.setValue( bObj.value(forKey: "amt") , forKey: "amount")
+                                tempObj.setValue( bObj.value(forKey: "tax_amt") , forKey: "tax_amount")
+                                tempObj.setValue( bObj.value(forKey: "duration") , forKey: "duration")
+                                tempObj.setValue( bObj.value(forKey: "total_distance") , forKey: "total_distance")
+                                tempObj.setValue( bObj.value(forKey: "toll_tax") , forKey: "toll_tax")
+                                self.setRideData(obj: tempObj)
+                                self.showRideComplete = true
+                                
                             }
                         }
                     }

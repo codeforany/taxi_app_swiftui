@@ -388,6 +388,154 @@ struct UserRunTipView: View {
             }
             .background(BackgroundCleanerView())
         })
+        .fullScreenCover(isPresented: $rVM.showRideComplete, content: {
+            ZStack {
+                
+                VisualEffectView(blurRadius: 15)
+                    .ignoresSafeArea()
+                    .offset(y: -3)
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text("Ride Completed")
+                            .font(.customfont(.extraBold, fontSize: 18))
+                            .foregroundColor(Color.primaryText)
+                            .padding(.top, 15)
+                        
+                        Divider()
+                        let distance = Double("\(rVM.rideObj.value(forKey: "total_distance") ?? "0" )") ?? 0.0
+                        let payableAmount = Double("\(rVM.rideObj.value(forKey: "amt") ?? "0" )") ?? 0.0
+                        let tollAmount = Double("\(rVM.rideObj.value(forKey: "toll_tax") ?? "0" )") ?? 0.0
+                        let taxAmount = Double("\(rVM.rideObj.value(forKey: "tax_amt") ?? "0" )") ?? 0.0
+                        let totalAmount = payableAmount - tollAmount - taxAmount
+                        
+                        HStack{
+                            Text("Payment Model:")
+                                .font(.customfont(.regular, fontSize: 18))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text(rVM.rideObj.value(forKey: "payment_type") as? Int ?? 0 == 1 ? "COD" : "ONLINE" )
+                                .font(.customfont(.extraBold, fontSize: 18))
+                                .foregroundColor(Color.primaryApp)
+                        }
+                        .padding(.bottom, 15)
+                        
+                        
+                        HStack{
+                            Text("Total Distance:")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("\(distance, specifier: "%.2f") KM" )
+                                .font(.customfont(.bold, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                        }
+
+                        
+                        HStack{
+                            Text("Total Duration:")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text(rVM.rideObj.value(forKey: "duration") as?  String ?? "00:00" )
+                                .font(.customfont(.bold, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                        }
+                            
+                        Divider()
+                        
+                        HStack{
+                            Text("Total Amount:")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("$\(totalAmount, specifier: "%.2f")" )
+                                .font(.customfont(.bold, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                        }
+                        
+                        HStack{
+                            Text("Tax Amount:")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("+$\(taxAmount, specifier: "%.2f")" )
+                                .font(.customfont(.bold, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                        }
+                        
+                        HStack{
+                            Text("Toll Tax Amount:")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("+$\(tollAmount, specifier: "%.2f")" )
+                                .font(.customfont(.bold, fontSize: 16))
+                                .foregroundColor(Color.primaryText)
+                        }
+                        
+                        HStack{
+                            Spacer()
+                            
+                            Rectangle()
+                                .fill(Color.primaryText)
+                                .frame(width: 120, height: 2)
+                        }
+                        
+                        HStack{
+                            Text("Payable Amount:")
+                                .font(.customfont(.bold, fontSize: 18))
+                                .foregroundColor(Color.primaryText)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("+$\(payableAmount, specifier: "%.2f")" )
+                                .font(.customfont(.extraBold, fontSize: 18))
+                                .foregroundColor(Color.primaryText)
+                        }
+                        
+                        Button {
+                            rVM.showRideComplete = false
+                        } label: {
+                            Text("YES, Accept Toll Tax")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.white)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 45 , alignment: .center)
+                        .background( Color.redApp )
+                        .cornerRadius(25)
+                        
+                        .padding(.vertical)
+                        
+                        Button {
+                            rVM.showRideComplete = false
+                        } label: {
+                            Text("NO")
+                                .font(.customfont(.regular, fontSize: 16))
+                                .foregroundColor(Color.primaryTextW)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 45 , alignment: .center)
+                        .background(Color.primaryApp)
+                        .cornerRadius(25)
+                        .padding(.bottom, .bottomInsets)
+                    }
+                    .padding(.horizontal, 20)
+                    .background(Color.white )
+                    .cornerRadius(10, corner: [.topLeft, .topRight])
+                    .shadow(radius: 2, y: -3)
+                }
+                
+            }
+            .background(BackgroundCleanerView())
+        })
         .background( NavigationLink(destination: SupportMessageView(), isActive: $sVM.showMessage,  label: {
             EmptyView()
         }) )
