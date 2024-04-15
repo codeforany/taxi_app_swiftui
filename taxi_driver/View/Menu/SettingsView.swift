@@ -49,6 +49,12 @@ struct SettingsView: View {
 
                         
                         NavigationLink {
+                            UserMyRidesView()
+                        } label: {
+                            SettingRow(icon: "sm_my_vehicle", title: "My Rides")
+                        }
+                        
+                        NavigationLink {
                             MyVehicleView()
                         } label: {
                             SettingRow(icon: "sm_my_vehicle", title: "My Vehicle")

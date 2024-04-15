@@ -69,6 +69,8 @@
 		CBB02FA92AB96E42009C42DB /* DocumentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB02FA82AB96E42009C42DB /* DocumentRow.swift */; };
 		CBB5FF582B3A845F00309277 /* ServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5FF572B3A845F00309277 /* ServiceCall.swift */; };
 		CBB5FF5A2B3A847900309277 /* Globs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB5FF592B3A847900309277 /* Globs.swift */; };
+		CBB6CF802BCCEEED000CF48E /* MyRideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6CF7F2BCCEEED000CF48E /* MyRideViewModel.swift */; };
+		CBB6CF822BCCF097000CF48E /* UserMyRidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB6CF812BCCF097000CF48E /* UserMyRidesView.swift */; };
 		CBC52B792BBFBDD000E904A9 /* LocationManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */; };
 		CBCB7F5F2AD11450008DC040 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB7F5E2AD11450008DC040 /* HomeView.swift */; };
 		CBD647AD2B3A0D0700867954 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CBD647AC2B3A0D0700867954 /* FirebaseAnalytics */; };
@@ -190,6 +192,8 @@
 		CBB02FA82AB96E42009C42DB /* DocumentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRow.swift; sourceTree = "<group>"; };
 		CBB5FF572B3A845F00309277 /* ServiceCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCall.swift; sourceTree = "<group>"; };
 		CBB5FF592B3A847900309277 /* Globs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globs.swift; sourceTree = "<group>"; };
+		CBB6CF7F2BCCEEED000CF48E /* MyRideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRideViewModel.swift; sourceTree = "<group>"; };
+		CBB6CF812BCCF097000CF48E /* UserMyRidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyRidesView.swift; sourceTree = "<group>"; };
 		CBC52B782BBFBDD000E904A9 /* LocationManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerViewModel.swift; sourceTree = "<group>"; };
 		CBCB7F5E2AD11450008DC040 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		CBD647E22B3A0D7700867954 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -309,6 +313,7 @@
 			children = (
 				CB8678742B5B76BF008322D5 /* UserHomeView.swift */,
 				CB0162872BC8F9CE00983BB5 /* UserRunTipView.swift */,
+				CBB6CF812BCCF097000CF48E /* UserMyRidesView.swift */,
 			);
 			path = UserHome;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				CBF0F35F2BC109D5007C004E /* DriverViewModel.swift */,
 				CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */,
 				CB0162852BC8F79700983BB5 /* UserRunRideViewModel.swift */,
+				CBB6CF7F2BCCEEED000CF48E /* MyRideViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				CB04BECB2ADF83CD008AADA9 /* RatingRow.swift in Sources */,
 				CB5859B52ADC10E300540729 /* AddMoneyWalletView.swift in Sources */,
 				CBB02FA52AB96C70009C42DB /* BankDetailsView.swift in Sources */,
+				CBB6CF822BCCF097000CF48E /* UserMyRidesView.swift in Sources */,
 				CB88DD8B2ADA3FCD00FED1CA /* WeeklySummaryRow.swift in Sources */,
 				CB4D82832ADCEB0100CE2AC1 /* SettingsView.swift in Sources */,
 				CB341BAC2BBD0AAC0093D421 /* RoadManager.swift in Sources */,
@@ -668,6 +675,7 @@
 				CBF901B62AB6D57600296488 /* taxi_driverApp.swift in Sources */,
 				CB608E532ADE412100B5B793 /* MyProfileDetailsView.swift in Sources */,
 				CB04BEC92ADF836C008AADA9 /* MyRatingView.swift in Sources */,
+				CBB6CF802BCCEEED000CF48E /* MyRideViewModel.swift in Sources */,
 				CBF901EA2AB7016A00296488 /* WelcomeView.swift in Sources */,
 				CB49C9D02B562DAE008568A7 /* SupportUserModel.swift in Sources */,
 				CB5074692ABABE9800B4C834 /* VehicleDocumentView.swift in Sources */,

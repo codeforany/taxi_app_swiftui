@@ -217,4 +217,10 @@ extension Date {
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return df.string(from: self)
     }
+    
+    var statusString: String {
+        let df = DateFormatter()
+        df.dateFormat = "dd MMM, yyyy hh:mm a"
+        return df.string(from: self)
+    }
 }
