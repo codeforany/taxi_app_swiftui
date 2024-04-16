@@ -52,6 +52,7 @@
 		CB5859B72ADC11D000540729 /* WalletRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B62ADC11D000540729 /* WalletRow.swift */; };
 		CB608E532ADE412100B5B793 /* MyProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */; };
 		CB608E552ADE45D300B5B793 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E542ADE45D300B5B793 /* EditProfileView.swift */; };
+		CB7876EB2BCD98880087EF43 /* DriverMyRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */; };
 		CB79EE2A2AD3BACF007F38CF /* RunTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB79EE292AD3BACF007F38CF /* RunTripView.swift */; };
 		CB8678752B5B76BF008322D5 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8678742B5B76BF008322D5 /* UserHomeView.swift */; };
 		CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD862ADA3E6900FED1CA /* SummaryView.swift */; };
@@ -175,6 +176,7 @@
 		CB5859B62ADC11D000540729 /* WalletRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRow.swift; sourceTree = "<group>"; };
 		CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailsView.swift; sourceTree = "<group>"; };
 		CB608E542ADE45D300B5B793 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverMyRideView.swift; sourceTree = "<group>"; };
 		CB79EE292AD3BACF007F38CF /* RunTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTripView.swift; sourceTree = "<group>"; };
 		CB8678742B5B76BF008322D5 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
 		CB88DD862ADA3E6900FED1CA /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				CB79EE292AD3BACF007F38CF /* RunTripView.swift */,
 				CB3EB4602AD522FF00C26505 /* ReasonView.swift */,
 				CBE8DC732AD7AFB60042DDDE /* TripDetailsView.swift */,
+				CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				CBB5FF5A2B3A847900309277 /* Globs.swift in Sources */,
 				CBA903952AE28B2A00A7D1E9 /* HelpView.swift in Sources */,
 				CB49C9D42B5630A8008568A7 /* SupportViewModel.swift in Sources */,
+				CB7876EB2BCD98880087EF43 /* DriverMyRideView.swift in Sources */,
 				CBA903972AE28B6600A7D1E9 /* HelpRow.swift in Sources */,
 				CBF3F4E52B55A22800D7D5CE /* SupportUserView.swift in Sources */,
 				CBB5FF582B3A845F00309277 /* ServiceCall.swift in Sources */,

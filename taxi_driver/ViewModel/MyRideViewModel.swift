@@ -14,6 +14,8 @@ class MyRideViewModel: ObservableObject {
     @Published var errorMessage = ""
     
     @Published var myRideArr: [NSDictionary] = []
+    @Published var driverAmount = 0.0
+    @Published var totalAmount = 0.0
     
     func statusText(rideObj: NSDictionary) -> String {
             
@@ -95,6 +97,26 @@ class MyRideViewModel: ObservableObject {
         }
 
         
+    }
+    
+    func apiDriverRideAll(){
+        ServiceCall.post(parameter: [:], path: Globs.svDriverAllRideList, isTokenApi: true) { responseObj in
+            
+            if let responseObj = responseObj {
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    let payload = responseObj.value(forKey: KKey.payload) as? NSDictionary ?? [:]
+                    self.myRideArr = payload.value(forKey: "ride_list") as?  [NSDictionary] ?? []
+                    self.totalAmount = Double("\( payload.value(forKey: "total") ?? "" )") ?? 0.0
+                    self.driverAmount = Double("\( payload.value(forKey: "driver_total") ?? "" )") ?? 0.0
+                }
+            }
+            
+            
+        } failure: { error in
+            self.errorMessage  = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+
     }
     
 }
