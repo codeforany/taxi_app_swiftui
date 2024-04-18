@@ -28,7 +28,7 @@ class UserRunRideViewModel: ObservableObject {
     @Published var showCancel = false
     @Published var showCancelReason = false
     
-    @Published var rateUser: Int = 4
+    @Published var rateUser: Int = 5
     @Published var showToll = false
     @Published var txtToll = ""
     
@@ -160,6 +160,16 @@ class UserRunRideViewModel: ObservableObject {
         ])
     }
     
+    func actionRating(){
+        apiUserRating(parameter:
+                        [
+                            "booking_id" :  self.rideObj.value(forKey: "booking_id") ?? "",
+                            "rating": "\( self.rateUser )",
+                            "comment": ""
+                        ]
+        )
+    }
+    
    
     
     //MARK: ApiCalling
@@ -204,6 +214,28 @@ class UserRunRideViewModel: ObservableObject {
         }
 
         
+    }
+    
+    
+    func apiUserRating(parameter: NSDictionary){
+        ServiceCall.post(parameter: parameter , path: Globs.svRideRating, isTokenApi: true) { responseObj in
+            
+            if let responseObj = responseObj {
+                
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    self.isAlertOkBack = true
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                    self.showError = true
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+            }
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+
     }
     
     func setRideData(obj: NSDictionary) {

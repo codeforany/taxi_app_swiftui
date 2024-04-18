@@ -92,6 +92,15 @@ class DriverRunRideViewModel: ObservableObject {
             "booking_status": self.rideObj.value(forKey: "booking_status") ?? ""
         ])
     }
+    func actionRating(){
+        apiDriverRating(parameter:
+                        [
+                            "booking_id" :  self.rideObj.value(forKey: "booking_id") ?? "",
+                            "rating": "\( self.rateUser )",
+                            "comment": ""
+                        ]
+        )
+    }
     
     func actionStatusChange(){
             
@@ -263,6 +272,27 @@ class DriverRunRideViewModel: ObservableObject {
         }
 
         
+    }
+    
+    func apiDriverRating(parameter: NSDictionary){
+        ServiceCall.post(parameter: parameter , path: Globs.svRideRating, isTokenApi: true) { responseObj in
+            
+            if let responseObj = responseObj {
+                
+                if responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    self.isAlertOkBack = true
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                    self.showError = true
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError = true
+                }
+            }
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ?? MSG.fail
+            self.showError = true
+        }
+
     }
     
     func setRideData(obj: NSDictionary) {

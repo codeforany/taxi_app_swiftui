@@ -60,6 +60,8 @@ struct Globs {
     static let svUserAllRideList = API_URL + "user_all_ride_list"
     static let svDriverAllRideList = API_URL + "driver_all_ride_list"
     
+    static let svRideRating = API_URL + "ride_rating"
+    
 }
 
 struct KKey {

@@ -109,7 +109,7 @@ struct RunTripView: View {
                             .padding(.vertical, 20)
                             
                             Button {
-                                
+                                rVM.actionRating()
                             } label: {
                                 Text( "RATE RIDER" )
                                     .font(.customfont(.regular, fontSize: 16))
@@ -540,7 +540,10 @@ struct RunTripView: View {
         }) )
         .alert(isPresented: $rVM.showError){
             Alert(title: Text(Globs.AppName), message: Text(rVM.errorMessage), dismissButton: .default(Text("Ok")) {
-                
+                if(rVM.isAlertOkBack) {
+                    rVM.isAlertOkBack = false
+                    rVM.showRunningRide = false
+                }
             } )
         }
         .navigationTitle("")
