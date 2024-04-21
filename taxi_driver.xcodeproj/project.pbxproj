@@ -50,6 +50,7 @@
 		CB5859B32ADC10C800540729 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B22ADC10C800540729 /* WalletView.swift */; };
 		CB5859B52ADC10E300540729 /* AddMoneyWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B42ADC10E300540729 /* AddMoneyWalletView.swift */; };
 		CB5859B72ADC11D000540729 /* WalletRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B62ADC11D000540729 /* WalletRow.swift */; };
+		CB5A3BEF2BD2F5F9001BEB4B /* TipDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */; };
 		CB608E532ADE412100B5B793 /* MyProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */; };
 		CB608E552ADE45D300B5B793 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E542ADE45D300B5B793 /* EditProfileView.swift */; };
 		CB7876EB2BCD98880087EF43 /* DriverMyRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */; };
@@ -174,6 +175,7 @@
 		CB5859B22ADC10C800540729 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		CB5859B42ADC10E300540729 /* AddMoneyWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyWalletView.swift; sourceTree = "<group>"; };
 		CB5859B62ADC11D000540729 /* WalletRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRow.swift; sourceTree = "<group>"; };
+		CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailViewModel.swift; sourceTree = "<group>"; };
 		CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailsView.swift; sourceTree = "<group>"; };
 		CB608E542ADE45D300B5B793 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverMyRideView.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				CB4388A22BC408280032E5E9 /* DriverRunRideViewModel.swift */,
 				CB0162852BC8F79700983BB5 /* UserRunRideViewModel.swift */,
 				CBB6CF7F2BCCEEED000CF48E /* MyRideViewModel.swift */,
+				CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				CB50746B2ABABEEB00B4C834 /* SubscriptionPlanView.swift in Sources */,
 				CB04A7652B3E772C00FDDEAE /* ImagePicker.swift in Sources */,
 				CB8AACE72BBAF8A6001D6787 /* MapKitUtils.swift in Sources */,
+				CB5A3BEF2BD2F5F9001BEB4B /* TipDetailViewModel.swift in Sources */,
 				CB04BECB2ADF83CD008AADA9 /* RatingRow.swift in Sources */,
 				CB5859B52ADC10E300540729 /* AddMoneyWalletView.swift in Sources */,
 				CBB02FA52AB96C70009C42DB /* BankDetailsView.swift in Sources */,

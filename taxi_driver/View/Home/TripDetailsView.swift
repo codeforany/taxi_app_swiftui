@@ -7,12 +7,12 @@
 
 import SwiftUI
 import MapKit
+import SDWebImageSwiftUI
 
 struct TripDetailsView: View {
     
     @Environment(\.presentationMode) var mode:Binding<PresentationMode>
-    @State var pickupLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1501)
-    @State var dropLocation = CLLocationCoordinate2D(latitude: 42.6619, longitude: 21.1701)
+    @StateObject var rVM = TipDetailViewModel.shared
     
     
     var body: some View {
@@ -55,6 +55,12 @@ struct TripDetailsView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, .topInsets)
                 
+                let distance = Double( "\( rVM.rideObj.value(forKey: "total_distance") ?? "0" )" ) ?? 0.0
+                let payableAmount = Double( "\( rVM.rideObj.value(forKey: "amt") ?? "0" )" ) ?? 0.0
+                let taxAmount = Double( "\( rVM.rideObj.value(forKey: "tax_amt") ?? "0" )" ) ?? 0.0
+                let tollAmount = Double( "\( rVM.rideObj.value(forKey: "toll_tax") ?? "0" )" ) ?? 0.0
+                let totalAmount = payableAmount - tollAmount - taxAmount
+                
                 ScrollView{
                     VStack {
                         
@@ -69,7 +75,7 @@ struct TripDetailsView: View {
                                 .frame(width: 10, height: 10)
                                 .cornerRadius(5)
                             
-                            Text("1 Ash Park, Pembroke Dock, SA72")
+                            Text(rVM.rideObj.value(forKey: "pickup_address") as?  String ?? "" )
                                 .font(.customfont(.regular, fontSize: 15))
                                 .foregroundColor(Color.primaryText)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,7 +88,7 @@ struct TripDetailsView: View {
                                 .fill(Color.primaryApp)
                                 .frame(width: 10, height: 10)
                             
-                            Text("54 Hollybank Rd, Southampton")
+                            Text(rVM.rideObj.value(forKey: "drop_address") as?  String ?? "")
                                 .font(.customfont(.regular, fontSize: 15))
                                 .foregroundColor(Color.primaryText)
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -90,18 +96,21 @@ struct TripDetailsView: View {
                         .padding(.horizontal, 20)
                         .padding(.bottom, 10)
                         
+                        
+                        MyMapView(requestLocation: $rVM.pickupLocation, destinationLocation: $rVM.dropLocation, pickupIcon: .constant("pickup_pin"), dropIcon: .constant("drop_pin"))
+                            .frame(width: .screenWidth, height: .screenWidth)
  
                         
                         HStack(alignment: .top,spacing: 8) {
                             Text("$")
                                 .font(.customfont(.extraBold, fontSize: 14))
                                 .foregroundColor(Color.primaryApp)
-                            Text("154.75")
+                            Text(String(format: "%.2f", payableAmount))
                                 .font(.customfont(.extraBold, fontSize: 25))
                                 .foregroundColor(Color.primaryApp)
                         }
                         
-                        Text("Payment made successfully by Cash")
+                        Text("Payment made successfully by \( rVM.rideObj.value(forKey: "payment_type") as? Int ?? 0 == 1 ? "cash" : "online"  )")
                             .font(.customfont(.regular, fontSize: 18))
                             .foregroundColor(Color.secondaryText)
                             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
@@ -111,20 +120,20 @@ struct TripDetailsView: View {
                             Divider()
                             
                             HStack{
-                                TitleSubtitleButton(title: "15 min", subtitle: "Time")
+                                TitleSubtitleButton(title: rVM.rideObj.value(forKey: "duration") as? String ?? "00:00", subtitle: "Time")
                                 
                                 Rectangle().fill(Color.lightGray)
                                     .frame(width: 1, height: 80)
-                                TitleSubtitleButton(title: "5.5 mi", subtitle: "Distance")
+                                TitleSubtitleButton(title: String(format: "%.2f KM", distance), subtitle: "Distance")
                             }
                             
                             Divider()
                         }
                         .padding(.bottom, 8)
                         
-                        TitleSubtitleRow(title: "Data & Time", subtitle: "14 Feb'19 at 9:42am")
-                        TitleSubtitleRow(title: "Service Type", subtitle: "Sedan")
-                        TitleSubtitleRow(title: "Trip Type", subtitle: "Normal")
+                        TitleSubtitleRow(title: "Data & Time", subtitle: (rVM.rideObj.value(forKey: "stop_time") as? String ?? "" ).date.statusString )
+                        TitleSubtitleRow(title: "Service Type", subtitle: rVM.rideObj.value(forKey: "service_name") as? String ?? "" )
+//                        TitleSubtitleRow(title: "Trip Type", subtitle: "Normal")
                         
                         Divider()
                             .padding(.horizontal, 20)
@@ -134,19 +143,24 @@ struct TripDetailsView: View {
                                 .font(.customfont(.regular, fontSize: 15))
                                 .foregroundColor(Color.secondaryText)
                             
-                            Text("\"JohnDoe\"")
+                            Text("\"\( rVM.rideObj.value(forKey: "name") as? String ?? "" )\"")
                                 .font(.customfont(.semiBold, fontSize: 15))
                                 .foregroundColor(Color.primaryText)
                             
-                            Image("ride_user_profile")
+                            WebImage(url: URL(string:  rVM.rideObj.value(forKey: "image") as? String ?? "" ))
+                                    
                                 .resizable()
+                                .indicator(.activity)
                                 .scaledToFit()
-                                .frame(width: 25)
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12.5)
+                            
+                           
                             
                             HStack(spacing: 0) {
                                 ForEach(1...5, id: \.self) { i in
                                     Image(systemName: "star.fill")
-                                        .foregroundColor( i <= 4 ? Color.primaryApp : Color.lightGray )
+                                        .foregroundColor( i <= (  Int( "\(rVM.rideObj.value(forKey: ServiceCall.userType == 1 ? "driver_rating" : "user_rating" ) ?? "0.0")"  ) ?? 1 ) ? Color.primaryApp : Color.lightGray )
                                 }
                             }
                         }
@@ -170,17 +184,17 @@ struct TripDetailsView: View {
                         }
                         .padding(.bottom, 8)
                         
-                        TitleSubtitleRow(title: "Trip fares", subtitle: "$40.25", color: .secondaryText)
-                        TitleSubtitleRow(title: "Taxi Fee", subtitle: "$20.00", color: .secondaryText)
-                        TitleSubtitleRow(title: "+ Tax", subtitle: "$400.00", color: .secondaryText)
-                        TitleSubtitleRow(title: "+ Tolls", subtitle: "$400.25", color: .secondaryText)
-                        TitleSubtitleRow(title: "Discount", subtitle: "$40.25", color: .secondaryText)
-                        TitleSubtitleRow(title: "+ Topup Added", subtitle: "$20.75", color: .secondaryText)
+                        TitleSubtitleRow(title: "Trip fares", subtitle: String(format: "$%.2f", totalAmount), color: .secondaryText)
+//                        TitleSubtitleRow(title: "Taxi Fee", subtitle: "$20.00", color: .secondaryText)
+                        TitleSubtitleRow(title: "+ Tax", subtitle: String(format: "$%.2f", taxAmount), color: .secondaryText)
+                        TitleSubtitleRow(title: "+ Tolls", subtitle: String(format: "$%.2f", tollAmount), color: .secondaryText)
+//                        TitleSubtitleRow(title: "Discount", subtitle: "$40.25", color: .secondaryText)
+//                        TitleSubtitleRow(title: "+ Topup Added", subtitle: "$20.75", color: .secondaryText)
                             .padding(.bottom, 4)
                         
                         Divider()
                         
-                        TitleSubtitleRow(title: "You payment", subtitle: "$860.75", color: .primaryApp, fontWeight: .semiBold)
+                        TitleSubtitleRow(title: "You payment", subtitle: String(format: "$%.2f", payableAmount), color: .primaryApp, fontWeight: .semiBold)
                             .padding(.bottom, 8)
                         
                         
