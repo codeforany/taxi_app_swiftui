@@ -9,44 +9,9 @@ import SwiftUI
 
 struct SummaryView: View {
     @Environment(\.presentationMode) var mode:Binding<PresentationMode>
+    @StateObject var sVM = SummaryViewModel.shared
     
-    @State var isToday = true
-    @State var todayArr = [
-        [
-              "time": "3:32",
-              "am_pm": "AM",
-              "name": "Pembroke Dock",
-              "detail": "Paid by card",
-              "price": "$25"
-            ],
-            [
-              "time": "4:32",
-              "am_pm": "AM",
-              "name": "Location name only",
-              "detail": "Paid by card",
-              "price": "$35"
-            ],
-            [
-              "time": "5:32",
-              "am_pm": "AM",
-              "name": "Pembroke Dock",
-              "detail": "Paid by card",
-              "price": "$30"
-            ],
-            [
-              "time": "6:32",
-              "am_pm": "AM",
-              "name": "Pembroke Dock",
-              "detail": "Paid by card",
-              "price": "$40"
-            ]
-    ]
-    @State var weeklyArr = [
-        ["time": "Mon, 28 Sep", "trips": "25", "price": "$40"],
-           ["time": "Mon, 27 Sep", "trips": "15", "price": "$30"],
-           ["time": "Mon, 26 Sep", "trips": "40", "price": "$120"],
-           ["time": "Mon, 24 Sep", "trips": "30", "price": "$100"]
-    ]
+    
     
     
     var body: some View {
@@ -70,15 +35,15 @@ struct SummaryView: View {
                         .foregroundColor(.white)
                         
                         Spacer()
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                                                        
-                            Text("Normal")
-                                .font(.customfont(.regular, fontSize: 16))
-                        })
-                        .foregroundColor(.primaryApp)
+//                        
+//                        Button(action: {
+//                            
+//                        }, label: {
+//                                                        
+//                            Text("Normal")
+//                                .font(.customfont(.regular, fontSize: 16))
+//                        })
+//                        .foregroundColor(.primaryApp)
                     }
                 }
                 
@@ -86,28 +51,28 @@ struct SummaryView: View {
                 .padding(.top, .topInsets)
                 
                 VStack(spacing: 0) {
-                    VStack(alignment: isToday ? .leading : .trailing ){
+                    VStack(alignment: sVM.isToday ? .leading : .trailing ){
                         HStack {
                             Button(action: {
                                 withAnimation {
-                                    isToday = true
+                                    sVM.isToday = true
                                 }
                                 
                             }, label: {
                                 Text("TODAY")
                                     .font(.customfont(.extraBold, fontSize: 16))
-                                    .foregroundColor( isToday ? .primaryApp : .lightGray )
+                                    .foregroundColor( sVM.isToday ? .primaryApp : .lightGray )
                             })
                             .frame(maxWidth: .infinity, alignment: .center)
                             Button(action: {
                                 withAnimation {
-                                    isToday = false
+                                    sVM.isToday = false
                                 }
                                 
                             }, label: {
                                 Text("WEEKLY")
                                     .font(.customfont(.extraBold, fontSize: 16))
-                                    .foregroundColor( !isToday ? .primaryApp : .lightGray )
+                                    .foregroundColor( !sVM.isToday ? .primaryApp : .lightGray )
                             })
                             .frame(maxWidth: .infinity, alignment: .center)
                         }
@@ -131,7 +96,7 @@ struct SummaryView: View {
                 ScrollView{
                     VStack {
                         
-                        Text("Mon, 18 OCT'23")
+                        Text(sVM.todayDate.dayString)
                             .font(.customfont(.regular, fontSize: 16))
                             .foregroundColor(Color.secondaryText)
                             .padding(.top, 25)
@@ -139,101 +104,39 @@ struct SummaryView: View {
                             Text("$")
                                 .font(.customfont(.extraBold, fontSize: 14))
                                 .foregroundColor(Color.primaryApp)
-                            Text("154.75")
+                            Text("\( sVM.isToday ? sVM.todayTotal : sVM.weekTotal, specifier: "%.2f" )")
                                 .font(.customfont(.extraBold, fontSize: 25))
                                 .foregroundColor(Color.primaryText)
                         }
                         .padding(.bottom, 25)
                         
-                        if(!isToday) {
+                        if(!sVM.isToday) {
+                            
+                            let maxHeight: Double = (  .screenWidth * 0.4 ) -  50.0
                             
                             HStack {
                                 
-                                VStack {
-                                    
-                                    Spacer()
-                                    
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 120)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
-                                    
-                                    Text("M")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
                                 
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 80)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
+                                ForEach(0 ..< sVM.weekTripsArr.count, id: \.self ) {
+                                    index in
                                     
-                                    Text("T")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
-                                
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 60)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
+                                    let obj = sVM.weekTripsArr[index]
                                     
-                                    Text("W")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
-                                
-                                
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 90)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
+                                    let barHeight = maxHeight * ( obj.value(forKey: "total_amt") as? Double ?? 0.0 ) / sVM.maxWeekDayAmt
+                                    VStack {
+                                        
+                                        Spacer()
+                                        
+                                        Rectangle()
+                                            .fill(Color.primaryApp)
+                                            .frame( width: 40, height: barHeight)
+                                            .cornerRadius(10, corner: [.topLeft, .topRight])
+                                        
+                                        Text( (obj.value(forKey: "date") as? String ?? "").date.dauNameOnly)
+                                            .font(.customfont(.regular, fontSize: 16))
+                                            .foregroundColor(Color.secondaryText)
+                                    }
                                     
-                                    Text("T")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
-                                
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 120)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
-                                    
-                                    Text("F")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
-                                
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 20)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
-                                    
-                                    Text("S")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
-                                }
-                                
-                                VStack {
-                                    Spacer()
-                                    Rectangle()
-                                        .fill(Color.primaryApp)
-                                        .frame( width: 40, height: 80)
-                                        .cornerRadius(10, corner: [.topLeft, .topRight])
-                                    
-                                    Text("S")
-                                        .font(.customfont(.regular, fontSize: 16))
-                                        .foregroundColor(Color.secondaryText)
                                 }
                             }
                             .frame(width: .infinity, height: .screenWidth * 0.4, alignment:   .bottom  )
@@ -244,16 +147,16 @@ struct SummaryView: View {
                             Divider()
                             
                             HStack{
-                                TitleSubtitleButton(title: "15", subtitle: "Trips")
+                                TitleSubtitleButton(title: "\( sVM.isToday ? sVM.todayTrips : sVM.weekTrips )", subtitle: "Trips")
                                 
                                 Rectangle().fill(Color.lightGray)
                                     .frame(width: 1, height: 80)
-                                TitleSubtitleButton(title: "8:30", subtitle: "Online hrs")
+                                TitleSubtitleButton(title: String(format: "$%.2f", sVM.isToday ? sVM.todayOnlineTotal : sVM.weekOnlineTotal ), subtitle: "Online Trip")
                                 
                                 
                                 Rectangle().fill(Color.lightGray)
                                     .frame(width: 1, height: 80)
-                                TitleSubtitleButton(title: "$22.48", subtitle: "Cash Tip")
+                                TitleSubtitleButton(title:  String(format: "$%.2f", sVM.isToday ? sVM.todayCashTotal : sVM.weekCashTotal ), subtitle: "Cash Trip")
                             }
                             
                             Divider()
@@ -276,25 +179,31 @@ struct SummaryView: View {
                     }
                     
                     
-                    LazyVStack{
-                        if(isToday) {
-                            ForEach(0..<todayArr.count, id: \.self, content:  { index in
-                                
-                                TodaySummaryRow(sObj: todayArr[index] as NSDictionary ?? [:] )
-                            })
+                   
+                        if(sVM.isToday) {
+                            LazyVStack{
+                                ForEach(0..<sVM.todatTripsArr.count, id: \.self, content:  { index in
+                                    
+                                    TodaySummaryRow(sObj: sVM.todatTripsArr[index] )
+                                })
+                                //
+                            }
+                            .padding(.horizontal, 20)
                         }else{
-                            ForEach(0..<weeklyArr.count, id: \.self, content:  { index in
-                                
-                                WeeklySummaryRow(sObj: weeklyArr[index] as NSDictionary ?? [:] )
-                            })
+                            LazyVStack{
+                                ForEach(0..<sVM.weekTripsArr.count, id: \.self, content:  { index in
+                                    
+                                    WeeklySummaryRow(sObj: sVM.weekTripsArr[index] )
+                                })
+                                //
+                            }
+                            .padding(.horizontal, 20)
                         }
                        
                         
                         
                         
-                        //
-                    }
-                    .padding(.horizontal, 20)
+                   
                 }
             }
             

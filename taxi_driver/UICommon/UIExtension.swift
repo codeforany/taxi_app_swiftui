@@ -218,6 +218,30 @@ extension Date {
         return df.string(from: self)
     }
     
+    var dayString: String {
+        let df = DateFormatter()
+        df.dateFormat = "EEE, dd MMM yyyy"
+        return df.string(from: self)
+    }
+    
+    var timeOnly: String {
+        let df = DateFormatter()
+        df.dateFormat = "h:mm"
+        return df.string(from: self)
+    }
+    
+    var ampmOnly: String {
+        let df = DateFormatter()
+        df.dateFormat = "aa"
+        return df.string(from: self)
+    }
+    
+    var dauNameOnly: String {
+        let df = DateFormatter()
+        df.dateFormat = "EEE"
+        return df.string(from: self)
+    }
+    
     var statusString: String {
         let df = DateFormatter()
         df.dateFormat = "dd MMM, yyyy hh:mm a"

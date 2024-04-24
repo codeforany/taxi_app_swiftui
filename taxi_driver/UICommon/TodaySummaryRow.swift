@@ -8,25 +8,21 @@
 import SwiftUI
 
 struct TodaySummaryRow: View {
-    @State var sObj: NSDictionary = [
-        "time": "6:32",
-        "am_pm": "AM",
-        "name": "Pembroke Dock",
-        "detail": "Paid by card",
-        "price": "$40"
-      ]
+    @State var sObj: NSDictionary = [:]
     
     var body: some View {
         
         VStack {
             HStack(spacing:15) {
                 VStack(spacing:4){
+                    
+                    let rideDate = (sObj.value(forKey: "start_time" ) as? String ?? "" ).date
                   
-                    Text(sObj.value(forKey: "time") as? String ?? "" )
+                    Text(rideDate.timeOnly)
                         .font(.customfont(.regular, fontSize: 15))
                         .foregroundColor(Color.primaryText)
                     
-                    Text(sObj.value(forKey: "am_pm") as? String ?? "")
+                    Text(rideDate.ampmOnly)
                         .font(.customfont(.bold, fontSize: 11))
                         .foregroundColor(Color.secondaryText)
                         .padding(.horizontal, 8)
@@ -36,18 +32,19 @@ struct TodaySummaryRow: View {
                 
                 VStack(alignment: .leading, spacing:8){
                   
-                    Text(sObj.value(forKey: "name") as? String ?? "")
+                    Text(sObj.value(forKey: "pickup_address") as? String ?? "")
+                        .lineLimit(1)
                         .font(.customfont(.regular, fontSize: 16))
                         .foregroundColor(Color.primaryText)
                     
-                    Text(sObj.value(forKey: "detail") as? String ?? "")
+                    Text("Paid by \( sObj.value(forKey: "payment_type") as? Int ?? 0 == 1 ? "cash" : "online"  )")
                         .font(.customfont(.regular, fontSize: 15))
                         .foregroundColor(Color.secondaryText)
                 }
                 .frame(maxWidth: .infinity,
                        alignment: .leading)
                 
-                Text(sObj.value(forKey: "price") as? String ?? "" )
+                Text("$\( Double( "\( sObj.value(forKey: "amt") ?? "0.0" )" )  ?? 0.0 , specifier: "%.2f" )" )
                     .font(.customfont(.regular, fontSize: 15))
                     .foregroundColor(Color.primaryText)
             }

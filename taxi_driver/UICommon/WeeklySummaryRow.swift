@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeeklySummaryRow: View {
-    @State var sObj: NSDictionary = ["time": "Mon, 28 Sep", "trips": "25", "price": "$40"]
+    @State var sObj: NSDictionary = [:]
     
     var body: some View {
         
@@ -18,18 +18,18 @@ struct WeeklySummaryRow: View {
                 
                 VStack(alignment: .leading, spacing:8){
                   
-                    Text(sObj.value(forKey: "time") as? String ?? "")
+                    Text((sObj.value(forKey: "date") as? String ?? "").date.dayString)
                         .font(.customfont(.regular, fontSize: 16))
                         .foregroundColor(Color.primaryText)
                     
-                    Text("\(sObj.value(forKey: "trips") as? String ?? "") Trips")
+                    Text("Trips \(sObj.value(forKey: "trips_count") as? Int ?? 0)")
                         .font(.customfont(.regular, fontSize: 15))
                         .foregroundColor(Color.secondaryText)
                 }
                 .frame(maxWidth: .infinity,
                        alignment: .leading)
                 
-                Text(sObj.value(forKey: "price") as? String ?? "" )
+                Text( "$\( Double( "\( sObj.value(forKey: "total_amt") ?? "0.0" )" )  ?? 0.0, specifier: "%.2f" )"  )
                     .font(.customfont(.regular, fontSize: 15))
                     .foregroundColor(Color.primaryText)
             }

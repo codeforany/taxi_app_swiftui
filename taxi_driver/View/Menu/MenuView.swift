@@ -171,17 +171,21 @@ struct MenuView: View {
                     .padding(.horizontal, 20)
                     .padding(.vertical, 15)
                     
-                    HStack {
-                        Image("summary")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                        
-                        Text("Summary")
-                            .font(.customfont(.semiBold, fontSize: 16))
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
+                    NavigationLink {
+                        SummaryView()
+                    } label: {
+                        HStack {
+                            Image("summary")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                            
+                            Text("Summary")
+                                .font(.customfont(.semiBold, fontSize: 16))
+                                .foregroundColor(.primary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 15)
@@ -219,17 +223,21 @@ struct MenuView: View {
                     .padding(.vertical, 15)
                     
                     
-                    HStack {
-                        Image("setting")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                        
-                        Text("Settings")
-                            .font(.customfont(.semiBold, fontSize: 16))
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        HStack {
+                            Image("setting")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                            
+                            Text("Settings")
+                                .font(.customfont(.semiBold, fontSize: 16))
+                                .foregroundColor(.primary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 15)

@@ -52,7 +52,7 @@ struct HomeView: View {
                     
                     
                     NavigationLink {
-                        SettingsView()
+                        MenuView()
                     } label: {
                         ZStack(alignment: .bottomLeading) {
                             
