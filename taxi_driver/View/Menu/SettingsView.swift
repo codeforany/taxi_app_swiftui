@@ -69,7 +69,13 @@ struct SettingsView: View {
                         }
 
                         
-                        SettingRow(icon: "sm_document", title: "Personal Document")
+                        NavigationLink {
+                            DocumentUploadView()
+                        } label: {
+                            SettingRow(icon: "sm_document", title: "Personal Document")
+                        }
+                        
+                       
                         
                         NavigationLink {
                             BankDetailsView()
@@ -77,6 +83,7 @@ struct SettingsView: View {
                             SettingRow(icon: "sm_bank", title: "Bank details")
                         }
 
+                        
                         
                         
                         SettingRow(icon: "sm_password", title: "Change Password")

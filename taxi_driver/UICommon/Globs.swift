@@ -64,6 +64,9 @@ struct Globs {
     static let svBookingDetail = API_URL + "booking_detail"
     static let svDriverSummary = API_URL + "driver_summary"
     
+    static let svPersonalDocumentList = API_URL + "personal_document_list"
+    static let svDriverDoucmentUpload = API_URL + "driver_update_document"
+    
 }
 
 struct KKey {

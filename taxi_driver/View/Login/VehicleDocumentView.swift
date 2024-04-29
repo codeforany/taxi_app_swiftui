@@ -65,22 +65,22 @@ struct VehicleDocumentView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     
                     
-                    ForEach(0..<listArr.count, id: \.self ) { index in
-                        
-                        var dObj = listArr[index] ?? [:]
-                        
-                        if( dObj["status"] as? String ?? "" == "uploaded" ) {
-                            DocumentRow(dObj: dObj,  type: .uploaded )
-                         
-                        }else if ( dObj["status"] as? String ?? "" == "uploading" ) {
-                            DocumentRow(dObj: dObj,  type: .uploading )
-                        }else{
-                            DocumentRow(dObj: dObj,  type: .upload )
-                        }
-                        
-                        
-                    }
-                    .padding(.bottom, 15)
+//                    ForEach(0..<listArr.count, id: \.self ) { index in
+//                        
+//                        var dObj = listArr[index] ?? [:]
+//                        
+//                        if( dObj["status"] as? String ?? "" == "uploaded" ) {
+//                            DocumentRow(dObj: dObj,  type: .uploaded )
+//                         
+//                        }else if ( dObj["status"] as? String ?? "" == "uploading" ) {
+//                            DocumentRow(dObj: dObj,  type: .uploading )
+//                        }else{
+//                            DocumentRow(dObj: dObj,  type: .upload )
+//                        }
+//                        
+//                        
+//                    }
+//                    .padding(.bottom, 15)
                     
                     
                     VStack(alignment: .leading, spacing: 0){

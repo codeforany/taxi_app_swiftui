@@ -7,12 +7,17 @@
 
 import SwiftUI
 
-struct DocumentModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class DocumentModel: Identifiable, Equatable {
+        
+    let id = UUID()
+    var data: NSDictionary = [:]
+    
+    init(obj: NSDictionary) {
+        self.data = obj
     }
-}
+    
+    static func == (lhs: DocumentModel, rhs: DocumentModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 
-#Preview {
-    DocumentModel()
 }
