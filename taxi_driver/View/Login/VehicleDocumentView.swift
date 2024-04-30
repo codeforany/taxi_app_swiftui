@@ -9,32 +9,13 @@ import SwiftUI
 
 struct VehicleDocumentView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    @State var listArr = [
-        [
-              "name": "RC Book",
-              "detail": "Vehicle Registration",
-              "info": "",
-              "status": "uploaded"
-            ],
-            [
-              "name": "Insurance policy",
-              "detail": "A driving license is an official do...",
-              "info": "",
-              "status": "uploading"
-            ] ,
-            [
-              "name": "Owner certificate",
-              "detail": "A passport is a travel document...",
-              "info": "",
-              "status": "upload"
-            ],
-            [
-              "name": "PUC",
-              "detail": "Incorrect document type",
-              "info": "",
-              "status": "upload"
-            ]
-    ]
+    @StateObject var dVM = DocumentViewModel.shared
+    
+    @State var showImagePicker = false
+    @State var showPhotoLibrary = false
+    @State var showCamera = false
+    
+    @State var selectObj: DocumentModel = DocumentModel(obj: [:])
         
     var body: some View {
         ZStack{
@@ -64,64 +45,15 @@ struct VehicleDocumentView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     
-                    
-//                    ForEach(0..<listArr.count, id: \.self ) { index in
-//                        
-//                        var dObj = listArr[index] ?? [:]
-//                        
-//                        if( dObj["status"] as? String ?? "" == "uploaded" ) {
-//                            DocumentRow(dObj: dObj,  type: .uploaded )
-//                         
-//                        }else if ( dObj["status"] as? String ?? "" == "uploading" ) {
-//                            DocumentRow(dObj: dObj,  type: .uploading )
-//                        }else{
-//                            DocumentRow(dObj: dObj,  type: .upload )
-//                        }
-//                        
-//                        
-//                    }
-//                    .padding(.bottom, 15)
-                    
-                    
-                    VStack(alignment: .leading, spacing: 0){
-                        Text("By continuing, I confirm that i have read & agree to the")
-                            .font(.customfont(.regular, fontSize: 11))
-                            .foregroundColor(Color.secondaryText)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        
-                        HStack{
-                            Text("Terms & conditions")
-                                .font(.customfont(.regular, fontSize: 11))
-                                .foregroundColor(Color.primaryText)
+                        ForEach(dVM.carDocArr, id: \.id ) { dObj in
                             
-                            Text("and")
-                                .font(.customfont(.regular, fontSize: 11))
-                                .foregroundColor(Color.secondaryText)
-                            
-                            Text("Privacy policy")
-                                .font(.customfont(.regular, fontSize: 11))
-                                .foregroundColor(Color.primaryText)
+                            DocumentRow(dObj: dObj, didAction:  {
+                                selectObj = dObj
+                                self.showImagePicker = true
+                            })
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 15)
                         
-                        NavigationLink {
-                            SubscriptionPlanView()
-                        } label: {
-                            Text("NEXT")
-                                .font(.customfont(.regular, fontSize: 16))
-                                .foregroundColor(Color.white)
-                        }
-                        .frame(maxWidth: .infinity, minHeight: 45 , alignment: .center)
-                        .background( Color.primaryApp )
-                        .cornerRadius(25)
-                        .padding(.bottom, 30)
-                    }
-                   
-
-                    
-                    
-                    
                     
                 }
                 .foregroundColor(Color.primaryText)
@@ -129,6 +61,43 @@ struct VehicleDocumentView: View {
                 
             }
         }
+        .sheet(isPresented: $showCamera, content: {
+            ImagePicker(sourceType: .camera) {
+                sImage in
+                
+                dVM.uploadCarDocAction(obj: selectObj.data, img: sImage)
+            }
+        })
+        .sheet(isPresented: $showPhotoLibrary, content: {
+            ImagePicker(sourceType: .photoLibrary) {
+                sImage in
+                
+                dVM.uploadCarDocAction(obj: selectObj.data, img: sImage)
+            }
+        })
+        .actionSheet(isPresented: $showImagePicker, content: {
+            
+            ActionSheet(title: Text("Select"), buttons: [
+                .default(Text("Photo Library")) {
+                    showPhotoLibrary = true
+                },
+                
+                .default(Text("Camera")) {
+                        showCamera = true
+                }
+                
+            ,
+                .destructive(Text("Cancel")) {
+                    
+                }
+                
+            ])
+        })
+        .alert(isPresented: $dVM.showError, content: {
+            Alert(title: Text("Driver App"), message: Text( dVM.errorMessage ), dismissButton: .default(Text("OK")) {
+                
+            } )
+        })
         .navigationTitle("")
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden()

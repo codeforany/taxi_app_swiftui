@@ -10,6 +10,7 @@ import SDWebImageSwiftUI
 
 struct VehicleRow: View {
     @State var vObj: NSDictionary = [:]
+    var didAction: ( () ->() )?
     
     var body: some View {
         
@@ -54,6 +55,9 @@ struct VehicleRow: View {
                 
                     
                
+            }
+            .onTapGesture {
+                didAction?()
             }
             
             Divider()

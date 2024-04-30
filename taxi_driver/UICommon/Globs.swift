@@ -66,6 +66,7 @@ struct Globs {
     
     static let svPersonalDocumentList = API_URL + "personal_document_list"
     static let svDriverDoucmentUpload = API_URL + "driver_update_document"
+    static let svCarDocumentList = API_URL + "car_document_list"
     
 }
 

@@ -10,6 +10,7 @@ import SwiftUI
 struct MyVehicleView: View {
     @Environment(\.presentationMode) var mode:Binding<PresentationMode>
     @ObservedObject var carVM = CarViewModel.shared
+    @State var showDoc = false
     
     var body: some View {
         ZStack {
@@ -48,7 +49,11 @@ struct MyVehicleView: View {
                     
                     List{
                         ForEach(0..<carVM.carList.count, id: \.self, content:  { index in
-                            VehicleRow(vObj: carVM.carList[index] as? NSDictionary ?? [:] )
+                            VehicleRow(vObj: carVM.carList[index] as? NSDictionary ?? [:] , didAction: {
+                                
+                                DocumentViewModel.shared.selectCarGetDocList(obj:carVM.carList[index] as? NSDictionary ?? [:] )
+                                self.showDoc = true
+                            } )
                                 .swipeActions(edge: .trailing) {
                                     Button {
                                         carVM.deleteVehicleApi(obj: carVM.carList[index] as? NSDictionary ?? [:])
@@ -104,6 +109,9 @@ struct MyVehicleView: View {
                 
             } )
         })
+        .background( NavigationLink(destination: VehicleDocumentView(), isActive: $showDoc,  label: {
+            EmptyView()
+        }) )
         .navigationTitle("")
         .navigationBarBackButtonHidden()
         .navigationBarHidden(true)
