@@ -51,6 +51,7 @@
 		CB5859B52ADC10E300540729 /* AddMoneyWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B42ADC10E300540729 /* AddMoneyWalletView.swift */; };
 		CB5859B72ADC11D000540729 /* WalletRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5859B62ADC11D000540729 /* WalletRow.swift */; };
 		CB5A3BEF2BD2F5F9001BEB4B /* TipDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */; };
+		CB5F75C92BE5A54E0032C7B8 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5F75C82BE5A54E0032C7B8 /* ChangePasswordView.swift */; };
 		CB608E532ADE412100B5B793 /* MyProfileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */; };
 		CB608E552ADE45D300B5B793 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB608E542ADE45D300B5B793 /* EditProfileView.swift */; };
 		CB6C59B62BDD468100AF8818 /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6C59B52BDD468100AF8818 /* DocumentViewModel.swift */; };
@@ -179,6 +180,7 @@
 		CB5859B42ADC10E300540729 /* AddMoneyWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoneyWalletView.swift; sourceTree = "<group>"; };
 		CB5859B62ADC11D000540729 /* WalletRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRow.swift; sourceTree = "<group>"; };
 		CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipDetailViewModel.swift; sourceTree = "<group>"; };
+		CB5F75C82BE5A54E0032C7B8 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		CB608E522ADE412100B5B793 /* MyProfileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileDetailsView.swift; sourceTree = "<group>"; };
 		CB608E542ADE45D300B5B793 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		CB6C59B52BDD468100AF8818 /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				CBA903922AE289DC00A7D1E9 /* TipsListView.swift */,
 				CBA903942AE28B2A00A7D1E9 /* HelpView.swift */,
 				CB231CF32B413C6C00A6196D /* DriverEditProfileView.swift */,
+				CB5F75C82BE5A54E0032C7B8 /* ChangePasswordView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */,
 				CB4C20C82AD29A5D0081B3FE /* TipRequestView.swift in Sources */,
 				CB8678752B5B76BF008322D5 /* UserHomeView.swift in Sources */,
+				CB5F75C92BE5A54E0032C7B8 /* ChangePasswordView.swift in Sources */,
 				CBE8DC7A2AD7B7300042DDDE /* TitleSubtitleButton.swift in Sources */,
 				CBE8DC742AD7AFB60042DDDE /* TripDetailsView.swift in Sources */,
 				CBFE45F42AB820CA00751656 /* SignUpView.swift in Sources */,

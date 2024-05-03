@@ -32,6 +32,16 @@ class ProfileViewModel: ObservableObject {
     
     @Published var selectZone: NSDictionary?
     @Published var isMale: Bool = false
+    
+    
+    @Published var txtCurrentPassword = ""
+    @Published var txtNewPassword = ""
+    @Published var txtConfirmPassword = ""
+    
+    @Published var showCurrentPassword = false
+    @Published var showNewPassword = false
+    @Published var showConfirmPassword = false
+    
         
     
     func loadData() {
@@ -145,6 +155,33 @@ class ProfileViewModel: ObservableObject {
         ] )
     }
     
+    func actionChangePassword(){
+            
+        if txtCurrentPassword.isEmpty {
+            self.errorMessage = "Please enter current password"
+            self.showError = true
+            return
+        }
+        
+        if txtNewPassword.isEmpty {
+            self.errorMessage = "Please enter new password"
+            self.showError = true
+            return
+        }
+        
+        if txtNewPassword != txtConfirmPassword {
+            self.errorMessage = "Password not match"
+            self.showError = true
+            return
+        }
+        
+        self.changePasswordApi(parameter: [
+            "old_password": txtCurrentPassword,
+            "new_password": txtNewPassword
+        ])
+        
+    }
+    
     //MARK: ServiceCall
     
     func getServiceZoneApi() {
@@ -254,6 +291,34 @@ class ProfileViewModel: ObservableObject {
                 if  responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
                     self.errorMessage = "Bank detail Update Successfully "
                     self.showError  = true
+                }else{
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
+                    self.showError  = true
+                }
+            }
+            
+        
+        } failure: { error in
+            self.errorMessage = error?.localizedDescription ??  MSG.fail
+            self.showError  = true
+        }
+    }
+    
+    func changePasswordApi(parameter: NSDictionary) {
+        
+        
+        ServiceCall.post(parameter: parameter, path: Globs.svChangePassword, isTokenApi: true) { responseObj in
+            
+            if let responseObj = responseObj {
+                if  responseObj.value(forKey: KKey.status) as? String ?? "" == "1" {
+                    
+                    self.txtCurrentPassword = ""
+                    self.txtNewPassword = ""
+                    self.txtConfirmPassword = ""
+                    self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.success
+                    self.showError  = true
+
+                    
                 }else{
                     self.errorMessage = responseObj.value(forKey: KKey.message) as? String ?? MSG.fail
                     self.showError  = true

@@ -68,6 +68,8 @@ struct Globs {
     static let svDriverDoucmentUpload = API_URL + "driver_update_document"
     static let svCarDocumentList = API_URL + "car_document_list"
     
+    static let svChangePassword = API_URL + "change_password"
+    
 }
 
 struct KKey {

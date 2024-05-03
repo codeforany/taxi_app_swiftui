@@ -84,9 +84,13 @@ struct SettingsView: View {
                         }
 
                         
+                        NavigationLink {
+                            ChangePasswordView()
+                        } label: {
+                            SettingRow(icon: "sm_password", title: "Change Password")
+                        }
                         
-                        
-                        SettingRow(icon: "sm_password", title: "Change Password")
+                       
                     }
                     .padding(.horizontal, 20)
                     
