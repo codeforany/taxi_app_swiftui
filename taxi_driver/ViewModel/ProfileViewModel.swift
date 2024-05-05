@@ -42,8 +42,6 @@ class ProfileViewModel: ObservableObject {
     @Published var showNewPassword = false
     @Published var showConfirmPassword = false
     
-        
-    
     func loadData() {
         
         txtName = ServiceCall.userPayload.value(forKey: "name") as? String ?? ""
@@ -64,8 +62,6 @@ class ProfileViewModel: ObservableObject {
             }) as? NSDictionary
             
         }
-        
-        
         if(serviceArr.count > 0 ) {
             
             let selectServiceIDArr = (ServiceCall.userPayload.value(forKey: "select_service_id") as? String ?? "").split(separator: ",").map { id in

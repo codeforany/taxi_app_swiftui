@@ -59,6 +59,8 @@
 		CB7876EB2BCD98880087EF43 /* DriverMyRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */; };
 		CB79EE2A2AD3BACF007F38CF /* RunTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB79EE292AD3BACF007F38CF /* RunTripView.swift */; };
 		CB8678752B5B76BF008322D5 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8678742B5B76BF008322D5 /* UserHomeView.swift */; };
+		CB88DBEE2BE8110B0016BB6C /* ContactUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DBED2BE8110B0016BB6C /* ContactUsViewModel.swift */; };
+		CB88DBF02BE813170016BB6C /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DBEF2BE813160016BB6C /* ContactUsView.swift */; };
 		CB88DD872ADA3E6900FED1CA /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD862ADA3E6900FED1CA /* SummaryView.swift */; };
 		CB88DD892ADA3FB200FED1CA /* TodaySummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD882ADA3FB200FED1CA /* TodaySummaryRow.swift */; };
 		CB88DD8B2ADA3FCD00FED1CA /* WeeklySummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB88DD8A2ADA3FCD00FED1CA /* WeeklySummaryRow.swift */; };
@@ -188,6 +190,8 @@
 		CB7876EA2BCD98880087EF43 /* DriverMyRideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverMyRideView.swift; sourceTree = "<group>"; };
 		CB79EE292AD3BACF007F38CF /* RunTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTripView.swift; sourceTree = "<group>"; };
 		CB8678742B5B76BF008322D5 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
+		CB88DBED2BE8110B0016BB6C /* ContactUsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewModel.swift; sourceTree = "<group>"; };
+		CB88DBEF2BE813160016BB6C /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
 		CB88DD862ADA3E6900FED1CA /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		CB88DD882ADA3FB200FED1CA /* TodaySummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySummaryRow.swift; sourceTree = "<group>"; };
 		CB88DD8A2ADA3FCD00FED1CA /* WeeklySummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryRow.swift; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 				CBA903942AE28B2A00A7D1E9 /* HelpView.swift */,
 				CB231CF32B413C6C00A6196D /* DriverEditProfileView.swift */,
 				CB5F75C82BE5A54E0032C7B8 /* ChangePasswordView.swift */,
+				CB88DBEF2BE813160016BB6C /* ContactUsView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				CB5A3BEE2BD2F5F9001BEB4B /* TipDetailViewModel.swift */,
 				CBA2C15A2BD99D83001A812F /* SummaryViewModel.swift */,
 				CB6C59B52BDD468100AF8818 /* DocumentViewModel.swift */,
+				CB88DBED2BE8110B0016BB6C /* ContactUsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 				CB4CE7002BB960F000A42220 /* LocationBooking.swift in Sources */,
 				CB3EB45D2AD51C6300C26505 /* BackgroundCleanerView.swift in Sources */,
 				CBFE45F02AB81DA200751656 /* SignInView.swift in Sources */,
+				CB88DBEE2BE8110B0016BB6C /* ContactUsViewModel.swift in Sources */,
 				CB341BB12BBD0D300093D421 /* ServicePriceModel.swift in Sources */,
 				CB341BAA2BBD0A2B0093D421 /* Road.swift in Sources */,
 				CBAED7542B426C600080A47B /* ProfileViewModel.swift in Sources */,
@@ -700,6 +707,7 @@
 				CB608E532ADE412100B5B793 /* MyProfileDetailsView.swift in Sources */,
 				CB04BEC92ADF836C008AADA9 /* MyRatingView.swift in Sources */,
 				CBB6CF802BCCEEED000CF48E /* MyRideViewModel.swift in Sources */,
+				CB88DBF02BE813170016BB6C /* ContactUsView.swift in Sources */,
 				CBF901EA2AB7016A00296488 /* WelcomeView.swift in Sources */,
 				CB49C9D02B562DAE008568A7 /* SupportUserModel.swift in Sources */,
 				CB5074692ABABE9800B4C834 /* VehicleDocumentView.swift in Sources */,
